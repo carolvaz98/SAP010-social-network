@@ -1,5 +1,14 @@
 import { loginCreate } from '../lib/index.js';
 
+export const validateEmail = (validEmail) => {
+  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regexEmail.test(validEmail);
+};
+export const validatePassword = (validPassword) => {
+  const regexPassword = /^.{6,}$/;
+  return regexPassword.test(validPassword);
+};
+
 export const register = () => {
   const container = document.createElement('div');
   const registerHTML = `
@@ -35,31 +44,47 @@ export const register = () => {
   const inputPassword = container.querySelector('.senha');
   const form = container.querySelector('#formulario-cadastro');
 
+  function showModal(type, message) {
+    let title, icon;
+
+    switch (type) {
+      case 'success':
+        title = 'Sucesso';
+        icon = 'success';
+        break;
+      case 'error':
+        title = 'Erro';
+        icon = 'error';
+        break;
+      default:
+        title = 'Aviso';
+        icon = 'warning';
+    }
+
+    Swal.fire({
+      title: title,
+      text: message,
+      icon: icon,
+      confirmButtonText: 'Fechar',
+    });
+  }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const email = inputEmail.value;
     const password = inputPassword.value;
 
-    function validateEmail(validEmail) {
-      const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return regexEmail.test(validEmail);
-    }
-    function validatePassword(validPassword) {
-      const regexPassword = /^.{6,}$/;
-      return regexPassword.test(validPassword);
-    }
-
     if (validateEmail(email) && validatePassword(password)) {
       try {
         loginCreate(email, password);
-        alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
+        showModal('success', 'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
         window.location.hash = 'welcome';
       } catch (error) {
-        alert('Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.');
+        showModal('Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.');
       }
     } else {
-      alert('Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.');
+      showModal('Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.');
     }
   });
 
