@@ -44,8 +44,10 @@ export const register = () => {
   const inputPassword = container.querySelector('.senha');
   const form = container.querySelector('#formulario-cadastro');
 
+  /* global Swal */
   function showModal(type, message) {
-    let title, icon;
+    let title;
+    let icon;
 
     switch (type) {
       case 'success':
@@ -60,11 +62,10 @@ export const register = () => {
         title = 'Aviso';
         icon = 'warning';
     }
-
     Swal.fire({
-      title: title,
+      title,
       text: message,
-      icon: icon,
+      icon,
       confirmButtonText: 'Fechar',
     });
   }
@@ -81,10 +82,10 @@ export const register = () => {
         showModal('success', 'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
         window.location.hash = 'welcome';
       } catch (error) {
-        showModal('Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.');
+        showModal('error', 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.');
       }
     } else {
-      showModal('Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.');
+      showModal('aviso', 'Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.');
     }
   });
 
