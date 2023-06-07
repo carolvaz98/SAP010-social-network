@@ -1,4 +1,4 @@
-import { loginUser, loginGoogle } from '../lib/index.js';
+import { loginUser, loginGoogle, loginGithub } from '../lib/index.js';
 
 export const welcome = () => {
   const container = document.createElement('div');
@@ -29,6 +29,11 @@ export const welcome = () => {
            <img class="img-google" src="img/google_logo.png"/>
              Sign in com o Google
          </button>
+
+         <button class="btnGitHub">
+         <img class="img-github" src="img/github.logo.png"/>
+           Sign in com o GitHub
+       </button>
     </div>
 </section>
 `;
@@ -40,6 +45,7 @@ export const welcome = () => {
   const btnSignIn = container.querySelector('.btnSignIn');
   const btnRegister = container.querySelector('.btnRegister');
   const btnGoogle = container.querySelector('.btnGoogle');
+  const btnGitHub = container.querySelector('.btnGitHub');
 
   btnSignIn.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -67,6 +73,21 @@ export const welcome = () => {
   btnGoogle.addEventListener('click', async (event) => {
     event.preventDefault();
     loginGoogle()
+      // Feito o Login direciona para a area de comentários
+      .then(() => {
+        window.location.hash = '#feed';
+      })
+
+      .catch(() => {
+        const errorWelcome = document.createElement('div');
+        errorWelcome.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.';
+        container.appendChild(errorWelcome);
+      });
+  });
+
+  btnGitHub.addEventListener('click', async (event) => {
+    event.preventDefault();
+    loginGithub()
       // Feito o Login direciona para a area de comentários
       .then(() => {
         window.location.hash = '#feed';

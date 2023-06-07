@@ -2,8 +2,11 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup, GoogleAuthProvider,
 } from 'firebase/auth';
+
+import { GithubAuthProvider, 
+  GoogleAuthProvider, 
+  signInWithPopup } from 'firebase/auth';
 
 /* import { getUsers, collection, getDocs } from 'firebase/firestore'; */
 
@@ -23,6 +26,13 @@ export const loginUser = (email, password) => {
 export const loginGoogle = () => {
   const authInstance = getAuth();
   const provider = new GoogleAuthProvider();
+
+  return signInWithPopup(authInstance, provider);
+};
+
+export const loginGithub = () => {
+  const authInstance = getAuth();
+  const provider = new GithubAuthProvider();
 
   return signInWithPopup(authInstance, provider);
 };
