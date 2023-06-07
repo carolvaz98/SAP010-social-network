@@ -88,7 +88,7 @@ export const welcome = () => {
   btnGitHub.addEventListener('click', async (event) => {
     event.preventDefault();
     loginGithub()
-      // Feito o Login direciona para a area de comentários
+      // Feito o Login direciona para a area de comentário
       .then(() => {
         window.location.hash = '#feed';
       })
