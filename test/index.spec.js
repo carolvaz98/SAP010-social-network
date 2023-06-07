@@ -1,6 +1,5 @@
 // importamos la funcion que vamos a testear
 import { validatePassword, validateEmail } from '../src/components.js/register.js';
-import { loginCreate } from '../src/lib/index';
 
 /* describe('myFunction', () => {
   it('debería ser una función', () => {

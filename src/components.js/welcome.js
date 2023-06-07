@@ -41,25 +41,47 @@ export const welcome = () => {
   const btnRegister = container.querySelector('.btnRegister');
   const btnGoogle = container.querySelector('.btnGoogle');
 
-  btnSignIn.addEventListener('click', async () => {
+  /* global Swal */
+  function showModal(type, message) {
+    let title;
+    let icon;
+
+    switch (type) {
+      default:
+        title = 'Aviso';
+        icon = 'warning';
+    }
+    Swal.fire({
+      title,
+      text: message,
+      icon,
+      confirmButtonText: 'Fechar',
+    });
+  }
+
+  btnSignIn.addEventListener('click', async (event) => {
+    event.preventDefault();
+
     const email = inputEmail.value;
     const password = inputPass.value;
     if (email && password) {
       try {
-        await loginUser(email, password);
+        loginUser(email, password);
         window.location.hash = '#feed';
       } catch (error) {
-        alert('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
+        showModal('aviso', 'Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
       }
     }
   });
 
-  btnRegister.addEventListener('click', () => {
+  btnRegister.addEventListener('click', (event) => {
+    event.preventDefault();
     // Direciona para a pagina de registro
     window.location.hash = '#register';
   });
 
-  btnGoogle.addEventListener('click', async () => {
+  btnGoogle.addEventListener('click', async (event) => {
+    event.preventDefault();
     loginGoogle()
       // Feito o Login direciona para a area de comentários
       .then(() => {
@@ -67,7 +89,7 @@ export const welcome = () => {
       })
 
       .catch(() => {
-        alert('Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.');
+        showModal('aviso', 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.');
       });
   });
 
