@@ -69,7 +69,9 @@ export const welcome = () => {
         loginUser(email, password);
         window.location.hash = '#feed';
       } catch (error) {
-        showModal('aviso', 'Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
+        const errorRegister = document.createElement('div')
+        errorRegister.textContent = 'Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.' 
+        container.appendChild(errorRegister);
       }
     }
   });
@@ -89,7 +91,9 @@ export const welcome = () => {
       })
 
       .catch(() => {
-        showModal('aviso', 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.');
+        const errorWelcome = document.createElement('div')
+        errorWelcome.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.'
+        container.appendChild(errorWelcome);
       });
   });
 
