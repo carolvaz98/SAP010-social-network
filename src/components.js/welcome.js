@@ -41,23 +41,6 @@ export const welcome = () => {
   const btnRegister = container.querySelector('.btnRegister');
   const btnGoogle = container.querySelector('.btnGoogle');
 
-  /* global Swal */
-  function showModal(type, message) {
-    let title;
-    let icon;
-
-    switch (type) {
-      default:
-        title = 'Aviso';
-        icon = 'warning';
-    }
-    Swal.fire({
-      title,
-      text: message,
-      icon,
-      confirmButtonText: 'Fechar',
-    });
-  }
 
   btnSignIn.addEventListener('click', async (event) => {
     event.preventDefault();
