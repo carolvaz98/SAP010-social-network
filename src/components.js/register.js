@@ -54,6 +54,9 @@ export const register = () => {
         title = 'Sucesso';
         icon = 'success';
         break;
+      default:
+        title = 'Default Title';
+        icon = 'Default Icon';
     }
     Swal.fire({
       title,
@@ -75,13 +78,13 @@ export const register = () => {
         showModal('success', 'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
         window.location.hash = 'welcome';
       } catch (error) {
-        const errorRegister = document.createElement('div')
-        errorRegister.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.'
+        const errorRegister = document.createElement('div');
+        errorRegister.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.';
         container.appendChild(errorRegister);
       }
     } else {
-      const errorCaracter = document.createElement('div')
-      errorCaracter.textContent = 'Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.'
+      const errorCaracter = document.createElement('div');
+      errorCaracter.textContent = 'Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.';
       container.appendChild(errorCaracter);
     }
   });

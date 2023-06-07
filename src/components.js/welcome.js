@@ -41,7 +41,6 @@ export const welcome = () => {
   const btnRegister = container.querySelector('.btnRegister');
   const btnGoogle = container.querySelector('.btnGoogle');
 
-
   btnSignIn.addEventListener('click', async (event) => {
     event.preventDefault();
 
@@ -52,8 +51,8 @@ export const welcome = () => {
         loginUser(email, password);
         window.location.hash = '#feed';
       } catch (error) {
-        const errorRegister = document.createElement('div')
-        errorRegister.textContent = 'Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.' 
+        const errorRegister = document.createElement('div');
+        errorRegister.textContent = 'Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.';
         container.appendChild(errorRegister);
       }
     }
@@ -74,8 +73,8 @@ export const welcome = () => {
       })
 
       .catch(() => {
-        const errorWelcome = document.createElement('div')
-        errorWelcome.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.'
+        const errorWelcome = document.createElement('div');
+        errorWelcome.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.';
         container.appendChild(errorWelcome);
       });
   });
