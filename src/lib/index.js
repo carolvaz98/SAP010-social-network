@@ -2,11 +2,10 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth';
-
-import { GithubAuthProvider, 
-  GoogleAuthProvider, 
-  signInWithPopup } from 'firebase/auth';
 
 /* import { getUsers, collection, getDocs } from 'firebase/firestore'; */
 

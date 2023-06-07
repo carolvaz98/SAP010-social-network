@@ -17,9 +17,9 @@ const init = () => {
       case '#register':
         main.appendChild(register());
         break;
-     /* case '#feed':
+        /* case '#feed':
         main.appendChild(feed());
-        break;*/
+        break; */
 
       default:
         main.appendChild(welcome());
