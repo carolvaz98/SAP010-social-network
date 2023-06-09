@@ -44,8 +44,8 @@ export const register = () => {
 
   const inputEmail = container.querySelector('.email');
   const inputPassword = container.querySelector('.senha');
-  const inputConfirm = container.querySelector('.confirmar-senha')
-  const btnReturn = container.querySelector('.btn-return')
+  const inputConfirm = container.querySelector('.confirmar-senha');
+  const btnReturn = container.querySelector('.btn-return');
   const form = container.querySelector('#formulario-cadastro');
 
   /* global Swal */
@@ -71,41 +71,38 @@ export const register = () => {
   }
   btnReturn.addEventListener('click', () => {
     window.location.hash = 'welcome';
-  })
+  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    
+
     const email = inputEmail.value;
     const password = inputPassword.value;
     const confirm = inputConfirm.value;
 
-    const container = document.getElementById('error-container');
-    container.innerHTML = '';
+    const errorContainer = document.getElementById('error-container');
+    errorContainer.innerHTML = '';
 
     if (validateEmail(email) && validatePassword(password)) {
-
       if (confirm === password) {
-
         try {
           loginCreate(email, password, confirm);
           showModal('success', 'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
-          window.location.hash = 'welcome';
+          window.location.href = '#welcome';
         } catch (error) {
           const errorRegister = document.createElement('div');
           errorRegister.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.';
-          container.appendChild(errorRegister);
+          errorContainer.appendChild(errorRegister);
         }
-
       } else {
         const errorConfirm = document.createElement('div');
-        errorConfirm.textContent = 'As senhas estão diferentes, por favor preencha o campo senha igualmente.';
-        container.appendChild(errorConfirm);
+        errorConfirm.textContent = 'As senhas estão diferentes, por favor preencha os campos de senha igualmente.';
+        errorContainer.appendChild(errorConfirm);
       }
     } else {
       const errorCaracter = document.createElement('div');
       errorCaracter.textContent = 'Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.';
-      container.appendChild(errorCaracter);
+      errorContainer.appendChild(errorCaracter);
     }
   });
 

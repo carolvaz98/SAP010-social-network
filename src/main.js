@@ -4,34 +4,23 @@ import { register } from './components.js/register.js';
 import { welcome } from './components.js/welcome.js';
 // import { sobre } from './components.js/sobre.js';
 
-const main = document.getElementById('root');
+const root = document.querySelector('#root');
 
-window.addEventListener('hashchange', () => {
-  const hash = window.location.hash;
-
-  switch (hash) {
-    case '#register':
-      main.innerHTML = '';
-      main.appendChild(register());
+const init = () => {
+  root.innerHTML = '';
+  switch (window.location.hash) {
+    case '':
+      root.appendChild(welcome());
       break;
-    /*case '#feed':
-      main.innerHTML = '';
-      main.appendChild(feed());
-      break;*/
-    case '#welcome':
-      main.innerHTML = '';
-      main.appendChild(welcome());
+    case '#register':
+      root.appendChild(register());
       break;
     default:
-      main.innerHTML = '';
-      main.appendChild(welcome());
+      root.appendChild(welcome());
   }
-});
-
+};
 window.addEventListener('load', () => {
-  // a fução getusers é uma função assincrona e ela retorna uma promisse
   getUsers(db).then((data) => console.log(data));
-  main.appendChild(welcome());
   init();
 });
-    
+window.addEventListener('hashchange', init);
