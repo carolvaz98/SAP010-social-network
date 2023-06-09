@@ -6,26 +6,27 @@ import { welcome } from './components.js/welcome.js';
 
 const main = document.getElementById('root');
 
-const init = () => {
-  window.addEventListener('hashchange', () => {
-    main.innerHTML = '';
-    switch (window.location.hash) {
-      case '':
-        main.appendChild(welcome());
-        break;
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash;
 
-      case '#register':
-        main.appendChild(register());
-        break;
-        /* case '#feed':
-        main.appendChild(feed());
-        break; */
-
-      default:
-        main.appendChild(welcome());
-    }
-  });
-};
+  switch (hash) {
+    case '#register':
+      main.innerHTML = '';
+      main.appendChild(register());
+      break;
+    /*case '#feed':
+      main.innerHTML = '';
+      main.appendChild(feed());
+      break;*/
+    case '#welcome':
+      main.innerHTML = '';
+      main.appendChild(welcome());
+      break;
+    default:
+      main.innerHTML = '';
+      main.appendChild(welcome());
+  }
+});
 
 window.addEventListener('load', () => {
   // a fução getusers é uma função assincrona e ela retorna uma promisse
@@ -33,3 +34,4 @@ window.addEventListener('load', () => {
   main.appendChild(welcome());
   init();
 });
+    
