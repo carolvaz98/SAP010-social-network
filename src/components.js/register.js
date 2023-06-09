@@ -96,7 +96,7 @@ export const register = () => {
         }
       } else {
         const errorConfirm = document.createElement('div');
-        errorConfirm.textContent = 'As senhas estão diferentes, por favor preencha os campos de senha igualmente.';
+        errorConfirm.textContent = 'As senhas estão diferentes. Por favor, preencha os campos de senha igualmente.';
         errorContainer.appendChild(errorConfirm);
       }
     } else {
