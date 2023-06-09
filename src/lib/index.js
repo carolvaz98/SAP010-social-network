@@ -5,6 +5,7 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
 
 /* import { getUsers, collection, getDocs } from 'firebase/firestore'; */
@@ -12,8 +13,14 @@ import {
 import { auth } from './firebase.js';
 
 // CRIAR USUÁRIO
-export const loginCreate = (email, password) => {
-  createUserWithEmailAndPassword(auth, email, password);
+export const loginCreate = async (email, password, name) => {
+  try {
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(user, { displayName: name });
+    // O nome do usuário foi atualizado no perfil do usuário
+  } catch (error) {
+    throw new Error('Ocorreu um erro ao criar o usuário.');
+  }
 };
 
 // LOGAR COM USUÁRIO EXISTENTE
