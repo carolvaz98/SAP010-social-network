@@ -9,6 +9,7 @@ export const validateEmail = (validEmail) => {
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regexEmail.test(validEmail);
 };
+
 export const validatePassword = (validPassword) => {
   const regexPassword = /^.{6,}$/;
   return regexPassword.test(validPassword);
@@ -24,6 +25,10 @@ export const register = () => {
                     <label class="dados" for="nome">Nome:</label>
                     <input class="nome" type="text" id="nome" placeholder="Nome" required>
                 </div>
+
+                <div id="error-container-name">
+                  <ul class="error-name"></ul>
+                </div>
    
                 <div>
                     <label class="dados" for="email">E-mail:</label>
@@ -34,10 +39,18 @@ export const register = () => {
                     <label class="dados" for="senha">Senha:</label>
                     <input class="senha" type="password" id="senha" placeholder="********" required>
                 </div>
+
+                <div id="error-container-email-password">
+                  <ul class="error-email-password"></ul>
+                </div>
    
                 <div>
                     <label class="dados" for="confirma-senha">Confirmar senha:</label>
                     <input class="confirmar-senha" type="password" id="confirma-senha" placeholder="********" required>
+                </div>
+
+                <div id="error-container-confirm">
+                  <ul class="error-confirm"></ul>
                 </div>
    
                 <button class="btn-register" type="submit">Cadastrar</button>
@@ -46,7 +59,11 @@ export const register = () => {
         </form>
     </div> `;
   container.innerHTML = registerHTML;
-
+  // SELETORES DE ERROS
+  const errorNameContainer = container.querySelector('.error-name');
+  const errorEmailPasswordContainer = container.querySelector('.error-email-password');
+  const errorConfirmContainer = container.querySelector('.error-confirm');
+  // SELETORES DE INPUT
   const inputName = container.querySelector('.nome');
   const inputEmail = container.querySelector('.email');
   const inputPassword = container.querySelector('.senha');
@@ -55,7 +72,7 @@ export const register = () => {
   const form = container.querySelector('#formulario-cadastro');
 
   btnReturn.addEventListener('click', () => {
-    window.location.hash = 'welcome';
+    window.location.hash = '';
   });
 
   form.addEventListener('submit', async (event) => {
@@ -66,29 +83,52 @@ export const register = () => {
     const confirm = inputConfirm.value;
     const name = inputName.value;
 
-    const errorContainer = document.getElementById('error-container');
-    errorContainer.innerHTML = '';
+    errorNameContainer.innerHTML = ''; // Limpa os erros anteriores
+    errorEmailPasswordContainer.innerHTML = ''; // Limpa os erros anteriores
+    errorConfirmContainer.innerHTML = ''; // Limpa os erros anteriores
 
-    if (validateEmail(email) && validatePassword(password)) {
-      if (confirm === password) {
-        if (validateName(name)) {
-          loginCreate(email, password, confirm);
-          alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
-          window.location.href = '';
-        } else {
-          const errorName = document.createElement('div');
-          errorName.textContent = 'O campo nome não pode conter caracteres especiais';
-          errorContainer.appendChild(errorName);
-        }
-      } else {
-        const errorConfirm = document.createElement('div');
-        errorConfirm.textContent = 'As senhas estão diferentes, por favor preencha os campos de senha igualmente.';
-        errorContainer.appendChild(errorConfirm);
-      }
+    const errorsName = []; // Lista de erros de nome
+    const errorsEmailPassword = []; // Lista de erros de e-mail/senha
+    const errorsConfirm = []; // Lista de erros de confirmação de senha
+
+    if (!validateEmail(email) || !validatePassword(password)) {
+      errorsEmailPassword.push('Por favor, insira uma senha com no mínimo 6 caracteres e um e-mail válido.');
+    }
+
+    if (confirm !== password) {
+      errorsConfirm.push('As senhas estão diferentes. Por favor, preencha os campos de senha igualmente.');
+    }
+
+    if (!validateName(name)) {
+      errorsName.push('O campo nome não pode conter caracteres especiais.');
+    }
+
+    if (errorsEmailPassword.length > 0) {
+      errorsEmailPassword.forEach((error) => {
+        const errorItem = document.createElement('li');
+        errorItem.textContent = error;
+        errorEmailPasswordContainer.appendChild(errorItem);
+      });
+    }
+
+    if (errorsConfirm.length > 0) {
+      errorsConfirm.forEach((error) => {
+        const errorItem = document.createElement('li');
+        errorItem.textContent = error;
+        errorConfirmContainer.appendChild(errorItem);
+      });
+    }
+
+    if (errorsName.length > 0) {
+      errorsName.forEach((error) => {
+        const errorItem = document.createElement('li');
+        errorItem.textContent = error;
+        errorNameContainer.appendChild(errorItem);
+      });
     } else {
-      const errorCaracter = document.createElement('div');
-      errorCaracter.textContent = 'Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.';
-      errorContainer.appendChild(errorCaracter);
+      loginCreate(email, password, confirm);
+      alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
+      window.location.href = '';
     }
   });
 
