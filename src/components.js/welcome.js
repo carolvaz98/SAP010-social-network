@@ -47,57 +47,37 @@ export const welcome = () => {
   const btnGoogle = container.querySelector('.btnGoogle');
   const btnGitHub = container.querySelector('.btnGitHub');
 
+  // BOTÃO PARA SE LOGAR (USUÁRIO EXISTENTE)
   btnSignIn.addEventListener('click', async (event) => {
     event.preventDefault();
 
     const email = inputEmail.value;
     const password = inputPass.value;
+
     if (email && password) {
-      try {
-        loginUser(email, password);
-        window.location.hash = '#feed';
-      } catch (error) {
-        const errorRegister = document.createElement('div');
-        errorRegister.textContent = 'Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.';
-        container.appendChild(errorRegister);
-      }
+      loginUser(email, password);
+      window.location.hash = '#feed';
     }
   });
 
+  // BOTÃO PARA SE CADASTRAR (NOVO USUÁRIO)
   btnRegister.addEventListener('click', (event) => {
     event.preventDefault();
-    // Direciona para a pagina de registro
     window.location.hash = '#register';
   });
 
+  // LOGAR COM O GOOGLE
   btnGoogle.addEventListener('click', async (event) => {
     event.preventDefault();
-    loginGoogle()
-      // Feito o Login direciona para a area de comentários
-      .then(() => {
-        window.location.hash = '#feed';
-      })
-
-      .catch(() => {
-        const errorWelcome = document.createElement('div');
-        errorWelcome.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.';
-        container.appendChild(errorWelcome);
-      });
+    loginGoogle();
+    window.location.hash = '#feed';
   });
 
+  // LOGAR COM O GITHUB
   btnGitHub.addEventListener('click', async (event) => {
     event.preventDefault();
-    loginGithub()
-      // Feito o Login direciona para a area de comentário
-      .then(() => {
-        window.location.hash = '#feed';
-      })
-
-      .catch(() => {
-        const errorWelcome = document.createElement('div');
-        errorWelcome.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.';
-        container.appendChild(errorWelcome);
-      });
+    loginGithub();
+    window.location.hash = '#feed';
   });
 
   return container;
