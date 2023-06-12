@@ -8,8 +8,6 @@ import {
   updateProfile,
 } from 'firebase/auth';
 
-/* import { getUsers, collection, getDocs } from 'firebase/firestore'; */
-
 import { auth } from './firebase.js';
 
 // CRIAR USUÁRIO
@@ -19,26 +17,37 @@ export const loginCreate = async (email, password, name) => {
     await updateProfile(user, { displayName: name });
     // O nome do usuário foi atualizado no perfil do usuário
   } catch (error) {
-    throw new Error('Ocorreu um erro ao criar o usuário.');
+    throw new Error('Ocorreu um erro ao criar o usuário, tente novamente.');
   }
 };
 
 // LOGAR COM USUÁRIO EXISTENTE
-export const loginUser = (email, password) => {
-  signInWithEmailAndPassword(auth, email, password);
+export const loginUser = async (email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    throw new Error('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
+  }
 };
 
 // LOGAR COM CONTA GOOGLE
-export const loginGoogle = () => {
-  const authInstance = getAuth();
-  const provider = new GoogleAuthProvider();
-
-  return signInWithPopup(authInstance, provider);
+export const loginGoogle = async () => {
+  try {
+    const authInstance = getAuth();
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(authInstance, provider);
+  } catch (error) {
+    throw new Error('Ocorreu um erro ao utilizar o login Google, tente novamente.');
+  }
 };
 
-export const loginGithub = () => {
-  const authInstance = getAuth();
-  const provider = new GithubAuthProvider();
-
-  return signInWithPopup(authInstance, provider);
+// LOGAR COM CONTA GITHUB
+export const loginGithub = async () => {
+  try {
+    const authInstance = getAuth();
+    const provider = new GithubAuthProvider();
+    return signInWithPopup(authInstance, provider);
+  } catch (error) {
+    throw new Error('Ocorreu um erro ao utilizar o login GitHub, tente novamente.');
+  }
 };
