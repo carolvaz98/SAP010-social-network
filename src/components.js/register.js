@@ -3,7 +3,7 @@ import { loginCreate } from '../lib/index.js';
 export const validateName = (validName) => {
   const regexName = /^[a-zA-Z]{2,}$/;
   return regexName.test(validName);
-}
+};
 
 export const validateEmail = (validEmail) => {
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,7 +47,7 @@ export const register = () => {
     </div> `;
   container.innerHTML = registerHTML;
 
-  const inputName = container.querySelector('.nome')
+  const inputName = container.querySelector('.nome');
   const inputEmail = container.querySelector('.email');
   const inputPassword = container.querySelector('.senha');
   const inputConfirm = container.querySelector('.confirmar-senha');
@@ -75,10 +75,9 @@ export const register = () => {
           loginCreate(email, password, confirm);
           alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
           window.location.href = '';
-
         } else {
           const errorName = document.createElement('div');
-          errorName.textContent = 'O campo nome não pode conter caracteres especiais'
+          errorName.textContent = 'O campo nome não pode conter caracteres especiais';
           errorContainer.appendChild(errorName);
         }
       } else {
@@ -91,8 +90,7 @@ export const register = () => {
       errorCaracter.textContent = 'Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.';
       errorContainer.appendChild(errorCaracter);
     }
-  }
-  );
+  });
 
-return container;
+  return container;
 };
