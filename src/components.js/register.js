@@ -1,5 +1,10 @@
 import { loginCreate } from '../lib/index.js';
 
+export const validateName = (validName) => {
+  const regexName = /^[a-zA-Z]{2,}$/;
+  return regexName.test(validName);
+}
+
 export const validateEmail = (validEmail) => {
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regexEmail.test(validEmail);
@@ -42,6 +47,7 @@ export const register = () => {
     </div> `;
   container.innerHTML = registerHTML;
 
+  const inputName = container.querySelector('.nome')
   const inputEmail = container.querySelector('.email');
   const inputPassword = container.querySelector('.senha');
   const inputConfirm = container.querySelector('.confirmar-senha');
@@ -58,20 +64,22 @@ export const register = () => {
     const email = inputEmail.value;
     const password = inputPassword.value;
     const confirm = inputConfirm.value;
+    const name = inputName.value;
 
     const errorContainer = document.getElementById('error-container');
     errorContainer.innerHTML = '';
 
     if (validateEmail(email) && validatePassword(password)) {
       if (confirm === password) {
-        try {
+        if (validateName(name)) {
           loginCreate(email, password, confirm);
-          alert('success', 'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
-          window.location.href = '#welcome';
-        } catch (error) {
-          const errorRegister = document.createElement('div');
-          errorRegister.textContent = 'Ocorreu um erro ao criar o seu cadastro, por favor tente novamente.';
-          errorContainer.appendChild(errorRegister);
+          alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
+          window.location.href = '';
+
+        } else {
+          const errorName = document.createElement('div');
+          errorName.textContent = 'O campo nome não pode conter caracteres especiais'
+          errorContainer.appendChild(errorName);
         }
       } else {
         const errorConfirm = document.createElement('div');
@@ -83,7 +91,8 @@ export const register = () => {
       errorCaracter.textContent = 'Por favor, insira um e-mail válido e uma senha com no mínimo 6 caracteres.';
       errorContainer.appendChild(errorCaracter);
     }
-  });
+  }
+  );
 
-  return container;
+return container;
 };
