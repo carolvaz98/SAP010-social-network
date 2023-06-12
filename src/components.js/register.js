@@ -48,27 +48,6 @@ export const register = () => {
   const btnReturn = container.querySelector('.btn-return');
   const form = container.querySelector('#formulario-cadastro');
 
-  /* global Swal */
-  function showModal(type, message) {
-    let title;
-    let icon;
-
-    switch (type) {
-      case 'success':
-        title = 'Sucesso';
-        icon = 'success';
-        break;
-      default:
-        title = 'Default Title';
-        icon = 'Default Icon';
-    }
-    Swal.fire({
-      title,
-      text: message,
-      icon,
-      confirmButtonText: 'Fechar',
-    });
-  }
   btnReturn.addEventListener('click', () => {
     window.location.hash = 'welcome';
   });
@@ -87,7 +66,7 @@ export const register = () => {
       if (confirm === password) {
         try {
           loginCreate(email, password, confirm);
-          showModal('success', 'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
+          alert('success', 'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
           window.location.href = '#welcome';
         } catch (error) {
           const errorRegister = document.createElement('div');
