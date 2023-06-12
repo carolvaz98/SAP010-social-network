@@ -1,5 +1,12 @@
 // importamos la funcion que vamos a testear
-import { validatePassword, validateEmail } from '../src/components.js/register.js';
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  auth,
+  user,
+} from 'firebase/auth';
+import { validatePassword, validateEmail, validateName } from '../src/components.js/register.js';
+import { loginCreate } from '../src/lib/index.js';
 
 /* describe('myFunction', () => {
   it('debería ser una función', () => {
@@ -32,5 +39,36 @@ describe('Validações de e-mail e senha', () => {
       const invalidPassword = 'senha';
       expect(validatePassword(invalidPassword)).toBe(false);
     });
+  });
+});
+
+describe('validateName', () => {
+  test('Deve retornar true para um nome válido', () => {
+    const result = validateName('Maria');
+    expect(result).toBe(true);
+  });
+
+  test('Deve retornar false para um nome inválido', () => {
+    const result = validateName('123');
+    expect(result).toBe(false);
+  });
+});
+
+describe('loginCreate', () => {
+  test('Deve criar um usuário', async (done) => {
+    const mockEmail = 'test@example.com';
+    const mockPassword = '123456';
+    const mockName = 'User name';
+
+    try {
+      await loginCreate(mockEmail, mockPassword, mockName);
+
+      expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(auth, mockEmail, mockPassword);
+      expect(updateProfile).toHaveBeenCalledWith(user, { displayName: mockName });
+
+      done();
+    } catch (error) {
+      done(error);
+    }
   });
 });
