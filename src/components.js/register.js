@@ -85,6 +85,38 @@ export const register = () => {
     window.location.hash = '';
   });
 
+  const validateForm = (name, email, password, confirm) => {
+    const errors = {
+      name: [],
+      emailPassword: [],
+      confirm: [],
+    };
+
+    if (!validateEmail(email) || !validatePassword(password)) {
+      errors.emailPassword.push('Por favor, insira uma senha com no mínimo 6 caracteres e um e-mail válido.');
+    }
+
+    if (confirm !== password) {
+      errors.confirm.push('As senhas estão diferentes. Por favor, preencha os campos de senha igualmente.');
+    }
+
+    if (!validateName(name)) {
+      errors.name.push('O campo nome não pode conter caracteres especiais.');
+    }
+
+    return errors;
+  };
+
+  const displayErrors = (errorContainer, errorMessages) => {
+    errorContainer.innerHTML = ''; // Limpa os erros anteriores
+
+    errorMessages.forEach((errorMessage) => {
+      const errorItem = document.createElement('li');
+      errorItem.textContent = errorMessage;
+      errorContainer.appendChild(errorItem);
+    });
+  };
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -93,49 +125,15 @@ export const register = () => {
     const confirm = inputConfirm.value;
     const name = inputName.value;
 
-    errorNameContainer.innerHTML = ''; // Limpa os erros anteriores
-    errorEmailPasswordContainer.innerHTML = ''; // Limpa os erros anteriores
-    errorConfirmContainer.innerHTML = ''; // Limpa os erros anteriores
+    const errors = validateForm(name, email, password, confirm);
 
-    const errorsName = []; // Lista de erros de nome
-    const errorsEmailPassword = []; // Lista de erros de e-mail/senha
-    const errorsConfirm = []; // Lista de erros de confirmação de senha
+    displayErrors(errorNameContainer, errors.name);
+    displayErrors(errorEmailPasswordContainer, errors.emailPassword);
+    displayErrors(errorConfirmContainer, errors.confirm);
 
-    if (!validateEmail(email) || !validatePassword(password)) {
-      errorsEmailPassword.push('Por favor, insira uma senha com no mínimo 6 caracteres e um e-mail válido.');
-    }
-
-    if (confirm !== password) {
-      errorsConfirm.push('As senhas estão diferentes. Por favor, preencha os campos de senha igualmente.');
-    }
-
-    if (!validateName(name)) {
-      errorsName.push('O campo nome não pode conter caracteres especiais.');
-    }
-
-    if (errorsEmailPassword.length > 0) {
-      errorsEmailPassword.forEach((error) => {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = error;
-        errorEmailPasswordContainer.appendChild(errorItem);
-      });
-    }
-
-    if (errorsConfirm.length > 0) {
-      errorsConfirm.forEach((error) => {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = error;
-        errorConfirmContainer.appendChild(errorItem);
-      });
-    }
-
-    if (errorsName.length > 0) {
-      errorsName.forEach((error) => {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = error;
-        errorNameContainer.appendChild(errorItem);
-      });
-    } else {
+    if (
+      errors.name.length === 0 && errors.emailPassword.length === 0 && errors.confirm.length === 0
+    ) {
       loginCreate(email, password, confirm);
       alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
       window.location.href = '';
@@ -144,3 +142,71 @@ export const register = () => {
 
   return container;
 };
+
+export default register;
+
+/* form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const email = inputEmail.value;
+  const password = inputPassword.value;
+  const confirm = inputConfirm.value;
+  const name = inputName.value;
+
+  errorNameContainer.innerHTML = ''; // Limpa os erros anteriores
+  errorEmailPasswordContainer.innerHTML = ''; // Limpa os erros anteriores
+  errorConfirmContainer.innerHTML = ''; // Limpa os erros anteriores
+
+  const errorsName = []; // Lista de erros de nome
+  const errorsEmailPassword = []; // Lista de erros de e-mail/senha
+  const errorsConfirm = []; // Lista de erros de confirmação de senha
+
+  if (!validateEmail(email) || !validatePassword(password)) {
+    errorsEmailPassword.push(
+      'Por favor, insira uma senha com no mínimo 6 caracteres e um e-mail válido.
+    ');
+  }
+
+  if (confirm !== password) {
+    errorsConfirm.push(
+      'As senhas estão diferentes. Por favor, preencha os campos de senha igualmente.'
+    );
+  }
+
+  if (!validateName(name)) {
+    errorsName.push('O campo nome não pode conter caracteres especiais.');
+  }
+
+  if (errorsEmailPassword.length > 0) {
+    errorsEmailPassword.forEach((error) => {
+      const errorItem = document.createElement('li');
+      errorItem.textContent = error;
+      errorEmailPasswordContainer.appendChild(errorItem);
+    });
+  }
+
+  if (errorsConfirm.length > 0) {
+    errorsConfirm.forEach((error) => {
+      const errorItem = document.createElement('li');
+      errorItem.textContent = error;
+      errorConfirmContainer.appendChild(errorItem);
+    });
+  }
+
+  if (errorsName.length > 0) {
+    errorsName.forEach((error) => {
+      const errorItem = document.createElement('li');
+      errorItem.textContent = error;
+      errorNameContainer.appendChild(errorItem);
+    });
+  } else {
+    loginCreate(email, password, confirm);
+    alert(
+      'Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.
+    '); // eslint-disable-line no-alert
+    window.location.href = '';
+  }
+});
+
+return container;
+}; */

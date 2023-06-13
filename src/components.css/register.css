@@ -90,6 +90,8 @@ body {
 
 .btn-reg,
 .btn-return {
+  background: linear-gradient(to right, #4473c4, #ED7D31);
+  color: black;
   width: 100%;
   margin-top: 20px;
   padding: 10px;
@@ -101,12 +103,6 @@ body {
 
 .btn-return {
   margin-bottom: 20px;
-}
-
-.btn-reg,
-.btn-return {
-  background: linear-gradient(to right, #4473c4, #ED7D31);
-  color: black;
 }
 
 .btn-return:hover,
