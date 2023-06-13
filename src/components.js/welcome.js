@@ -4,42 +4,45 @@ export const welcome = () => {
   const container = document.createElement('div');
 
   const signInHTML = `
-<section class="mainPage">
-  <div class="bgContainer">
-  <img src="../img/comunicacao.jpg" class="bg">
-  </div>
-    <div class="divSignIn">
-      <img src="img/logo_petchat.png" class="logoW">
-         <p class="introSignIn">Bem-vindo(a) ao <strong>PetChat</strong></p>
-         <label class='label' for="email">E-mail:</label>
+      <section class="mainPage">
+            <div class="bgContainer">
+                <img src="../img/comunicacao.jpg" class="bg">
+            </div>
+                <div class="divSignIn">
+                    <img src="img/logo_petchat.png" class="logoW">
 
-         <div class="inputGroup">
-           <i class="material-icons inputIcon">person_outline</i>
-           <input type="email" class="inputSignIn" id="email" placeholder="example@youremail.com" required>
-         </div>
+                        <p class="introSignIn">Bem-vindo(a) ao <strong>PetChat</strong></p>
 
-         <label class='label' for="pass">Senha:</label>
-         <div class="inputGroup">
-           <i class="material-icons inputIcon">lock</i>
-             <input type="password" class="inputSignIn" id="pass" placeholder="*******" required minlength="6">
-         </div>
+                        <label class='label' for="email">E-mail:</label>
+                        <div class="inputGroup">
+                          <i class="material-icons inputIcon">person_outline</i>
+                            <input type="email" class="inputSignIn" id="email" placeholder="example@youremail.com" required>
+                        </div>
 
-         <button class="btnSignIn active">Sign In</button>
-         <p class="textOu">----------------------------- ou -----------------------------</p>
+                        <label class='label' for="pass">Senha:</label>
+                        <div class="inputGroup">
+                          <i class="material-icons inputIcon">lock</i>
+                            <input type="password" class="inputSignIn" id="pass" placeholder="*******" required minlength="6">
+                        </div>
+
+                      <button class="btnSignIn active">Sign In</button>
+
+                      <p class="textOu">----------------------------- ou -----------------------------</p>
             
-         <button class="btnGoogle">
-           <img class="img-google" src="img/google_logo.png"/>
-             Sign in com o Google
-         </button>
+                      <button class="btnGoogle">
+                        <img class="img-google" src="img/google_logo.png"/>
+                          Sign in com o Google
+                      </button>
 
-         <button class="btnGitHub">
-         <img class="img-github" src="img/github.logo.png"/>
-           Sign in com o GitHub
-       </button>
-       <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
-    </div>
-</section>
-`;
+                      <button class="btnGitHub">
+                        <img class="img-github" src="img/github.logo.png"/>
+                          Sign in com o GitHub
+                      </button>
+
+                  <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
+                </div>
+      </section>
+  `;
 
   container.innerHTML = signInHTML;
 

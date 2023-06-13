@@ -18,55 +18,56 @@ export const validatePassword = (validPassword) => {
 export const register = () => {
   const container = document.createElement('div');
   const registerHTML = `
-    <div class="register-elements">
-    <img src="../img/comunicacao.jpg" class="bg">
-    <div class="mainPage">
-        <form id="formulario-cadastro">
-        <img src="img/logo_petchat.png" class="logoW">
-            <h1 class="register-h1"> Cadastro de usuário </h1>
+      <div class="register-elements">
+          <img src="../img/comunicacao.jpg" class="bg">
+        <div class="mainPage">
+            <form id="formulario-cadastro">
+                <img src="img/logo_petchat.png" class="logoW">
+                  <h1 class="register-h1"> Cadastro de usuário </h1>
             
-                <div class="inputGroup">
-                    <label class="dados" for="nome">Nome:</label>
-                    <i class="material-icons inputIcon">person_outline</i>
-                    <input class="inputSignIn nome" type="text" id="nome" placeholder="Seu Nome" required>
-                </div>
+                      <div class="inputGroup">
+                        <label class="dados" for="nome">Nome:</label>
+                        <i class="material-icons inputIcon">person_outline</i>
+                        <input class="inputSignIn nome" type="text" id="nome" placeholder="Seu Nome" required>
+                      </div>
 
-                <div id="error-container-name">
-                  <ul class="error-name"></ul>
-                </div>
+                      <div id="error-container-name">
+                        <ul class="error-name"></ul>
+                      </div>
    
-                <div class="inputGroup">
-                    <label class="dados" for="email">E-mail:</label>
-                    <i class="material-icons inputIcon">person_outline</i>
-                    <input class="inputSignIn email" type="email" id="email" placeholder="contato@exemplo.com" required>
-                </div>
+                      <div class="inputGroup">
+                        <label class="dados" for="email">E-mail:</label>
+                        <i class="material-icons inputIcon">person_outline</i>
+                        <input class="inputSignIn email" type="email" id="email" placeholder="contato@exemplo.com" required>
+                      </div>
    
-                <div class="inputGroup">
-                    <label class="dados" for="senha">Senha:</label>
-                    <i class="material-icons inputIcon">lock</i>
-                    <input class="inputSignIn senha" type="password" id="senha" placeholder="********" required>
-                </div>
+                      <div class="inputGroup">
+                        <label class="dados" for="senha">Senha:</label>
+                        <i class="material-icons inputIcon">lock</i>
+                        <input class="inputSignIn senha" type="password" id="senha" placeholder="********" required>
+                      </div>
 
-                <div id="error-container-email-password">
-                  <ul class="error-email-password"></ul>
-                </div>
+                      <div id="error-container-email-password">
+                        <ul class="error-email-password"></ul>
+                      </div>
    
-                <div class="inputGroup">
-                    <label class="dados" for="confirma-senha">Confirmar senha:</label>
-                    <i class="material-icons inputIcon">lock</i>
-                    <input class="inputSignIn confirmar-senha" type="password" id="confirma-senha" placeholder="********" required>
-                </div>
+                      <div class="inputGroup">
+                        <label class="dados" for="confirma-senha">Confirmar senha:</label>
+                        <i class="material-icons inputIcon">lock</i>
+                        <input class="inputSignIn confirmar-senha" type="password" id="confirma-senha" placeholder="********" required>
+                      </div>
 
-                <div id="error-container-confirm">
-                  <ul class="error-confirm"></ul>
-                </div>
+                      <div id="error-container-confirm">
+                        <ul class="error-confirm"></ul>
+                      </div>
    
-                <button class="btn-reg" type="submit">Cadastrar</button>
+                      <button class="btn-reg" type="submit">Cadastrar</button>
 
-                <button class="btn-return" type="submit">Voltar</button>
-        </form>
-    </div>
-  </div> `;
+                      <button class="btn-return" type="submit">Voltar</button>
+              </form>
+          </div>
+      </div> 
+  `;
   container.innerHTML = registerHTML;
   // SELETORES DE ERROS
   const errorNameContainer = container.querySelector('.error-name');
