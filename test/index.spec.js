@@ -47,7 +47,6 @@ describe('validateName', () => {
     expect(result).toBe(false);
   });
 });
-
 describe('loginCreate', () => {
   test('Deve criar um usuário', async (done) => {
     const mockEmail = 'test@example.com';
