@@ -8,11 +8,6 @@ import {
 import { validatePassword, validateEmail, validateName } from '../src/components.js/register.js';
 import { loginCreate } from '../src/lib/index.js';
 
-/* describe('myFunction', () => {
-  it('debería ser una función', () => {
-    expect(typeof myFunction).toBe('function');
-  });
-}); */
 
 describe('Validações de e-mail e senha', () => {
   // validação de e-mail
