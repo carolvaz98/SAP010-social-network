@@ -110,3 +110,16 @@ body {
   background-color: #4473c48e;
   color: black;
 } 
+
+/* style error */
+#error-container-name,
+#error-container-email-password,
+#error-container-confirm {
+  color: red;
+  font-style: italic;
+}
+
+  ul{
+    list-style-type: none;
+    font-size: 12px;
+  }
