@@ -5,7 +5,9 @@ export const welcome = () => {
 
   const signInHTML = `
 <section class="mainPage">
-  <img src="img/comunicacao.jpg" class="bg">
+  <div class="bgContainer">
+  <img src="../img/comunicacao.jpg" class="bg">
+  </div>
     <div class="divSignIn">
       <img src="img/logo_petchat.png" class="logoW">
          <p class="introSignIn">Bem-vindo(a) ao <strong>PetChat</strong></p>
@@ -23,8 +25,8 @@ export const welcome = () => {
          </div>
 
          <button class="btnSignIn active">Sign In</button>
-         <button class="btnRegister">Cadastro</button>
-    
+         <p class="textOu">----------------------------- ou -----------------------------</p>
+            
          <button class="btnGoogle">
            <img class="img-google" src="img/google_logo.png"/>
              Sign in com o Google
@@ -34,6 +36,7 @@ export const welcome = () => {
          <img class="img-github" src="img/github.logo.png"/>
            Sign in com o GitHub
        </button>
+       <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
     </div>
 </section>
 `;
