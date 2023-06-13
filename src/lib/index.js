@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
+  fetchSignInMethodsForEmail,
 } from 'firebase/auth';
 
 import { auth } from './firebase.js';
@@ -27,6 +28,14 @@ export const loginUser = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     throw new Error('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
+  }
+};
+
+export const emailDuplicate = async (email) => {
+  try {
+    await fetchSignInMethodsForEmail(auth, email);
+  } catch (error) {
+    throw new Error('Ocorreu um erro. Email já cadastrado.');
   }
 };
 

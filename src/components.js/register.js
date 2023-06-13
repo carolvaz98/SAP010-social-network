@@ -1,4 +1,4 @@
-import { loginCreate } from '../lib/index.js';
+import { loginCreate, emailDuplicate } from '../lib/index.js';
 
 export const validateName = (validName) => {
   const regexName = /^[a-zA-Z]{2,}$/;
@@ -40,6 +40,10 @@ export const register = () => {
                         <i class="material-icons inputIcon">person_outline</i>
                         <input class="inputSignIn email" type="email" id="email" placeholder="contato@exemplo.com" required>
                       </div>
+
+                      <div id="error-container-email-duplicate">
+                        <ul class="error-email-duplicate"></ul>
+                      </div>
    
                       <div class="inputGroup">
                         <label class="dados" for="senha">Senha:</label>
@@ -73,6 +77,7 @@ export const register = () => {
   const errorNameContainer = container.querySelector('.error-name');
   const errorEmailPasswordContainer = container.querySelector('.error-email-password');
   const errorConfirmContainer = container.querySelector('.error-confirm');
+  const errorDuplicate = container.querySelector('.error-email-duplicate');
   // SELETORES DE INPUT
   const inputName = container.querySelector('.nome');
   const inputEmail = container.querySelector('.email');
@@ -90,6 +95,7 @@ export const register = () => {
       name: [],
       emailPassword: [],
       confirm: [],
+      errorDuplicate: [],
     };
 
     if (!validateEmail(email) || !validatePassword(password)) {
@@ -102,6 +108,10 @@ export const register = () => {
 
     if (!validateName(name)) {
       errors.name.push('O campo nome não pode conter caracteres especiais.');
+    }
+
+    if (!emailDuplicate(email)) {
+      errors.errorDuplicate.push('Email já cadastrado. Por favor, utilize outro email.');
     }
 
     return errors;
@@ -130,9 +140,11 @@ export const register = () => {
     displayErrors(errorNameContainer, errors.name);
     displayErrors(errorEmailPasswordContainer, errors.emailPassword);
     displayErrors(errorConfirmContainer, errors.confirm);
+    displayErrors(errorDuplicate, errors.errorDuplicate);
 
     if (
       errors.name.length === 0 && errors.emailPassword.length === 0 && errors.confirm.length === 0
+      && errors.errorDuplicate.length === 0
     ) {
       loginCreate(email, password, confirm);
       alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.'); // eslint-disable-line no-alert
