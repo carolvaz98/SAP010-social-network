@@ -39,7 +39,7 @@ describe('Login Functions', () => {
     updateProfile.mockResolvedValue();
   });
 
-  // TESTE CRIAR USUÁRIO
+  // TESTE - CRIAR USUÁRIO
   describe('loginCreate', () => {
     it('deve criar um usuário', async () => {
       const email = 'test@example.com';
@@ -64,7 +64,7 @@ describe('Login Functions', () => {
     });
   });
 
-  // TESTE ENTRAR COM USUÁRIO EXISTENTE
+  // TESTE - ENTRAR COM USUÁRIO EXISTENTE
   describe('loginUser', () => {
     it('deve entrar com um usuário existente', async () => {
       const email = 'test@example.com';
@@ -83,7 +83,7 @@ describe('Login Functions', () => {
     });
   });
 
-  // TESTE VERIFICAR E-MAIL JÁ CADASTRADO
+  // TESTE - VERIFICAR E-MAIL JÁ CADASTRADO
   describe('emailDuplicate', () => {
     it('deve verificar se já existe algum e-mail cadastrado', async () => {
       const email = 'test@example.com';
