@@ -14,10 +14,8 @@ import { auth } from './firebase.js';
 // CRIAR USUÁRIO
 export const loginCreate = async (email, password, name) => {
   try {
-    const authInstance = getAuth(auth);
-    const { user } = await createUserWithEmailAndPassword(authInstance, email, password);
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(user, { displayName: name });
-    // O nome do usuário foi atualizado no perfil do usuário
   } catch (error) {
     throw new Error('Ocorreu um erro ao criar o usuário, tente novamente.');
   }
