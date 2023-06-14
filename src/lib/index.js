@@ -14,7 +14,8 @@ import { auth } from './firebase.js';
 // CRIAR USUÁRIO
 export const loginCreate = async (email, password, name) => {
   try {
-    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    const authInstance = getAuth(auth);
+    const { user } = await createUserWithEmailAndPassword(authInstance, email, password);
     await updateProfile(user, { displayName: name });
     // O nome do usuário foi atualizado no perfil do usuário
   } catch (error) {
@@ -33,9 +34,10 @@ export const loginUser = async (email, password) => {
 
 export const emailDuplicate = async (email) => {
   try {
-    await fetchSignInMethodsForEmail(auth, email);
+    const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+    return signInMethods.length > 0;
   } catch (error) {
-    throw new Error('Ocorreu um erro. Email já cadastrado.');
+    throw new Error('Ocorreu um erro ao verificar o e-mail cadastrado.');
   }
 };
 
