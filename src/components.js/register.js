@@ -168,6 +168,7 @@ export const register = () => {
       } else {
         loginCreate(email, password, confirm);
         // eslint-disable-line no-alert
+        // eslint-disable-next-line no-alert
         alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
         window.location.href = '';
       }
