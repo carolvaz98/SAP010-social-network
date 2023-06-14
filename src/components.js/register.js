@@ -75,10 +75,10 @@ export const register = () => {
   container.innerHTML = registerHTML;
 
   // Seletores de erros
-  const errorNameContainer = container.querySelector('#error-container-name .error-name');
-  const errorEmailContainer = container.querySelector('#error-container-email .error-email');
-  const errorPasswordContainer = container.querySelector('#error-container-password .error-password');
-  const errorConfirmContainer = container.querySelector('#error-container-confirm .error-confirm');
+  const errorNameContainer = container.querySelector('.error-name');
+  const errorEmailContainer = container.querySelector('.error-email');
+  const errorPasswordContainer = container.querySelector('.error-password');
+  const errorConfirmContainer = container.querySelector('.error-confirm');
 
   // Seletores de input
   const form = container.querySelector('#formulario-cadastro');
@@ -86,6 +86,11 @@ export const register = () => {
   const inputEmail = container.querySelector('.email');
   const inputPassword = container.querySelector('.senha');
   const inputConfirmPassword = container.querySelector('.confirmar-senha');
+  const btnReturn = container.querySelector('.btn-return');
+
+  btnReturn.addEventListener('click', () => {
+    window.location.href = '';
+  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();

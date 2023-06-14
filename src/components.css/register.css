@@ -113,7 +113,8 @@ body {
 
 /* style error */
 #error-container-name,
-#error-container-email-password,
+#error-container-email,
+#error-container-password,
 #error-container-confirm {
   color: red;
   font-style: italic;

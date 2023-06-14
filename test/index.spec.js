@@ -27,6 +27,7 @@ jest.mock('firebase/auth', () => ({
 
 describe('Login Functions', () => {
   const mockAuth = { getAuth };
+  const mockAuthInstance = getAuth();
   const mockUser = { displayName: 'Test User' };
 
   beforeEach(() => {
@@ -40,11 +41,15 @@ describe('Login Functions', () => {
     it('deve criar um usuário', async () => {
       const email = 'test@example.com';
       const password = 'password';
-      const name = 'Test User';
+      const name = 'Test';
 
-      await loginCreate(email, password, name);
+      await loginCreate(email, password, name, mockAuth);
 
-      expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(mockAuth, email, password);
+      expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
+        mockAuthInstance,
+        email,
+        password,
+      );
       expect(updateProfile).toHaveBeenCalledWith(mockUser, { displayName: name });
     });
 
@@ -62,16 +67,16 @@ describe('Login Functions', () => {
       const email = 'test@example.com';
       const password = 'password';
 
-      await loginUser(email, password);
+      await loginUser(email, password, mockAuth);
 
-      expect(signInWithEmailAndPassword).toHaveBeenCalledWith(mockAuth, email, password);
+      expect(signInWithEmailAndPassword).toHaveBeenCalledWith(mockAuthInstance, email, password);
     });
 
     it('deve gerar um erro quando o login falha', async () => {
       const mockError = new Error('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
       signInWithEmailAndPassword.mockRejectedValue(mockError);
 
-      await expect(loginUser('', '')).rejects.toThrow('Ocorreu um erro ao fazer login, verifique suas credenciais.');
+      await expect(loginUser('', '')).rejects.toThrow('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
     });
   });
 
@@ -80,9 +85,9 @@ describe('Login Functions', () => {
     const mockGoogleAuthProvider = { GoogleAuthProvider };
 
     it('deve fazer login com o provedor do Google', async () => {
-      await loginGoogle();
+      await loginGoogle(mockAuth);
 
-      expect(signInWithPopup).toHaveBeenCalledWith(mockAuth, mockGoogleAuthProvider);
+      expect(signInWithPopup).toHaveBeenCalledWith(mockAuthInstance, mockGoogleAuthProvider);
     });
   });
 
@@ -91,9 +96,9 @@ describe('Login Functions', () => {
     const mockGithubAuthProvider = { GithubAuthProvider };
 
     it('deve fazer login com o provedor do GitHub', async () => {
-      await loginGithub();
+      await loginGithub(mockAuth);
 
-      expect(signInWithPopup).toHaveBeenCalledWith(mockAuth, mockGithubAuthProvider);
+      expect(signInWithPopup).toHaveBeenCalledWith(mockAuthInstance, mockGithubAuthProvider);
     });
   });
 });
