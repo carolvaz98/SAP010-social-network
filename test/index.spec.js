@@ -107,7 +107,7 @@ describe('Login Functions', () => {
     });
   });
 
-  // TESTE ENTRAR COM LOGIN GOOGLE
+  // TESTE - ENTRAR COM LOGIN GOOGLE
   describe('loginGoogle', () => {
     it('deve fazer login com o provedor do Google', async () => {
       const mockGoogleAuthProvider = new GoogleAuthProvider();
@@ -125,7 +125,7 @@ describe('Login Functions', () => {
     });
   });
 
-  // TESTE ENTRAR COM LOGIN GITHUB
+  // TESTE - ENTRAR COM LOGIN GITHUB
   describe('loginGithub', () => {
     it('deve fazer login com o provedor do Github', async () => {
       const mockGithubAuthProvider = new GithubAuthProvider();
