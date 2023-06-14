@@ -20,9 +20,9 @@ export const register = () => {
   const registerHTML = `
     <div class="register-elements">
       <img src="../img/comunicacao.jpg" class="bg">
-      <div class="mainPage">
+      <div class="containerRegister">
         <form id="formulario-cadastro">
-          <img src="img/logo_petchat.png" class="logoW">
+          <img src="img/logo_petchat.png" class="logoPetRegister">
           <h1 class="register-h1"> Cadastro de usuário </h1>
 
           <div class="inputGroup">

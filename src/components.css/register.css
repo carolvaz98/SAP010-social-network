@@ -31,26 +31,25 @@ body {
   z-index: -1;
 }
 
-.mainPage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+.containerRegister {
   max-width: 390px;
   background-color: #fff;
   border: 2px solid rgba(0, 0, 0, 0.429);
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.55);
   padding: 20px;
-  margin-top: -60px;
+  top: -3px;
+  left: auto;
+  right: 20px; /* Adicionamos essa propriedade para mover para a direita */
 }
 
-.logoW {
+.logoPetRegister {
   width: 70%;
-  margin-bottom: 10px;
+  margin-bottom: -20px;
   margin-left: 15%;
 }
 
+/* texto cadastro de usuário */
 .register-h1 {
   text-align: center;
   margin-top: 20px;
@@ -64,6 +63,7 @@ body {
   font-weight: bold;
 }
 
+/* não sei */
 .inputSignIn {
   width: 100%;
   margin-top: 5px;
@@ -73,6 +73,7 @@ body {
   border-radius: 15px;
 }
 
+/* não sei */
 .inputGroup {
   position: relative;
 }

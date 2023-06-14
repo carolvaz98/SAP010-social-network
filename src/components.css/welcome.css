@@ -17,38 +17,40 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.mainPage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+.containerWelcome {
   max-width: 390px;
   background-color: #fff;
   border: 2px solid rgba(0, 0, 0, 0.429);
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.55);
   padding: 20px;
-  margin-top: -60px;
+  margin-top: -3px;
+  margin-left: 650px;
+  margin-right: 20px; /* Adicionamos essa propriedade para mover para a direita */
 }
 
-.logoW {
+/* logo petchat */
+.logoPetWelcome {
   width: 70%;
-  margin-bottom: 10px;
+  margin-bottom: -20px;
   margin-left: 15%;
 }
 
+/* texto bem vindo ao petchat */
 .introSignIn {
   margin-top: 20px;
   font-size: 1.8rem;
   margin-bottom: 35px;
 }
 
+/* não sei - acessibilidade */ 
 .label {
   display: block;
   margin-top: 10px;
   font-weight: bold;
 }
 
+/* não sei */
 .inputSignIn {
   width: 100%;
   margin-top: 5px;
@@ -58,10 +60,12 @@ body {
   border-radius: 15px;
 }
 
+/* não sei */
 .inputGroup {
   position: relative;
 }
 
+/* não sei */
 .inputIcon {
   position: absolute;
   left: 10px;
@@ -69,17 +73,23 @@ body {
   transform: translateY(-50%);
 }
 
+/* não sei */
 .material-icons {
   vertical-align: middle;
 }
+
+/* -------ou-------- */
 .textOu {
   text-align: center;
   padding: 15px;
-  
 }
+
+/* botões */
 .btnSignIn,
 .btnGoogle,
 .btnGitHub {
+  background: linear-gradient(to right, #ed7c319e, #4473c48e);
+  color: #060606;
   width: 100%;
   margin-top: 20px;
   padding: 10px;
@@ -89,10 +99,12 @@ body {
   font-weight: bolder;
 }
 
+/* altura botão GitHub */
 .btnGitHub {
   margin-bottom: 20px;
 }
 
+/* botão criar uma conta */
 .btnRegister{
   display: flex;
   align-items: center;
@@ -105,12 +117,6 @@ body {
 }
 .btnRegister:hover {
   color: #ED7D31;
-  
-}
-.btnGoogle,
-.btnGitHub {
-  background: linear-gradient(to right, #ed7c319e, #4473c48e);
-  color: #060606;
 }
 
 .btnGoogle:hover,
@@ -119,11 +125,13 @@ body {
   color: #fbfbfb;
 }
 
+/* sombreamento botão sign in */
 .active {
   color: #fff;
   background: linear-gradient(to right, #4472c4, #ED7D31);
   backdrop-filter: blur(2px);
 }
+
 .active:hover {
   /* background-color: #4473c48e; */
   color: #060606;

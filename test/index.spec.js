@@ -28,7 +28,7 @@ jest.mock('firebase/auth', () => ({
 describe('Login Functions', () => {
   const mockAuth = { getAuth };
   const mockAuthInstance = getAuth();
-  const mockUser = { displayName: 'Test User' };
+  const mockUser = { displayName: 'Test' };
 
   beforeEach(() => {
     jest.clearAllMocks();

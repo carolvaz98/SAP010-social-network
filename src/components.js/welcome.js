@@ -4,13 +4,13 @@ export const welcome = () => {
   const container = document.createElement('div');
 
   const signInHTML = `
-      <section class="mainPage">
+    <section class="container-parent">
+        <div class="containerWelcome">
             <div class="bgContainer">
                 <img src="../img/comunicacao.jpg" class="bg">
             </div>
                 <div class="divSignIn">
-                    <img src="img/logo_petchat.png" class="logoW">
-
+                <img src="../img/logo_petchat.png" class="logoPetWelcome">
                         <p class="introSignIn">Bem-vindo(a) ao <strong>PetChat</strong></p>
 
                         <label class='label' for="email">E-mail:</label>
@@ -41,7 +41,8 @@ export const welcome = () => {
 
                   <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
                 </div>
-      </section>
+          </div>
+    </section>
   `;
 
   container.innerHTML = signInHTML;
