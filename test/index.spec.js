@@ -1,67 +1,99 @@
-// importamos la funcion que vamos a testear
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GithubAuthProvider,
+  GoogleAuthProvider,
   updateProfile,
-  auth,
-  user,
+  getAuth,
 } from 'firebase/auth';
-import { validatePassword, validateEmail, validateName } from '../src/components.js/register.js';
-import { loginCreate } from '../src/lib/index.js';
 
-describe('Validações de e-mail e senha', () => {
-  // validação de e-mail
-  describe('validateEmail', () => {
-    test('Deve retornar true para um e-mail válido', () => {
-      const validEmail = 'test@example.com';
-      expect(validateEmail(validEmail)).toBe(true);
+import {
+  loginCreate,
+  loginUser,
+  loginGoogle,
+  loginGithub,
+} from '../src/lib/index.js';
+
+jest.mock('firebase/auth', () => ({
+  ...jest.requireActual('firebase/auth'),
+  createUserWithEmailAndPassword: jest.fn(),
+  signInWithEmailAndPassword: jest.fn(),
+  signInWithPopup: jest.fn(),
+  updateProfile: jest.fn(),
+  GoogleAuthProvider: jest.fn(),
+  GithubAuthProvider: jest.fn(),
+}));
+
+describe('Login Functions', () => {
+  const mockAuth = { getAuth };
+  const mockUser = { displayName: 'Test User' };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    createUserWithEmailAndPassword.mockResolvedValue({ user: mockUser });
+    updateProfile.mockResolvedValue();
+  });
+
+  // TESTE CRIAR USUÁRIO
+  describe('loginCreate', () => {
+    it('deve criar um usuário', async () => {
+      const email = 'test@example.com';
+      const password = 'password';
+      const name = 'Test User';
+
+      await loginCreate(email, password, name);
+
+      expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(mockAuth, email, password);
+      expect(updateProfile).toHaveBeenCalledWith(mockUser, { displayName: name });
     });
 
-    test('Deve retornar false para um e-mail inválido', () => {
-      const invalidEmail = 'invalid_email';
-      expect(validateEmail(invalidEmail)).toBe(false);
+    it('deve gerar um erro quando a criação do usuário falhar', async () => {
+      const mockError = new Error('Ocorreu um erro ao criar o usuário, tente novamente.');
+      createUserWithEmailAndPassword.mockRejectedValue(mockError);
+
+      await expect(loginCreate('', '', '')).rejects.toThrow('Ocorreu um erro ao criar o usuário, tente novamente.');
     });
   });
 
-  // validação de senha
-  describe('validatePassword', () => {
-    test('Deve retornar true para uma senha válida', () => {
-      const validPassword = 'senha123';
-      expect(validatePassword(validPassword)).toBe(true);
+  // TESTE ENTRAR COM USUÁRIO EXISTENTE
+  describe('loginUser', () => {
+    it('deve entrar com um usuário existente', async () => {
+      const email = 'test@example.com';
+      const password = 'password';
+
+      await loginUser(email, password);
+
+      expect(signInWithEmailAndPassword).toHaveBeenCalledWith(mockAuth, email, password);
     });
 
-    test('Deve retornar false para uma senha inválida', () => {
-      const invalidPassword = 'senha';
-      expect(validatePassword(invalidPassword)).toBe(false);
+    it('deve gerar um erro quando o login falha', async () => {
+      const mockError = new Error('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
+      signInWithEmailAndPassword.mockRejectedValue(mockError);
+
+      await expect(loginUser('', '')).rejects.toThrow('Ocorreu um erro ao fazer login, verifique suas credenciais.');
     });
   });
-});
 
-describe('validateName', () => {
-  test('Deve retornar true para um nome válido', () => {
-    const result = validateName('Maria');
-    expect(result).toBe(true);
+  // TESTE ENTRAR COM LOGIN GOOGLE
+  describe('loginGoogle', () => {
+    const mockGoogleAuthProvider = { GoogleAuthProvider };
+
+    it('deve fazer login com o provedor do Google', async () => {
+      await loginGoogle();
+
+      expect(signInWithPopup).toHaveBeenCalledWith(mockAuth, mockGoogleAuthProvider);
+    });
   });
 
-  test('Deve retornar false para um nome inválido', () => {
-    const result = validateName('123');
-    expect(result).toBe(false);
-  });
-});
-describe('loginCreate', () => {
-  test('Deve criar um usuário', async (done) => {
-    const mockEmail = 'test@example.com';
-    const mockPassword = '123456';
-    const mockName = 'User name';
+  // TESTE ENTRAR COM LOGIN GITHUB
+  describe('loginGithub', () => {
+    const mockGithubAuthProvider = { GithubAuthProvider };
 
-    try {
-      await loginCreate(mockEmail, mockPassword, mockName);
+    it('deve fazer login com o provedor do GitHub', async () => {
+      await loginGithub();
 
-      expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(auth, mockEmail, mockPassword);
-      expect(updateProfile).toHaveBeenCalledWith(user, { displayName: mockName });
-
-      done();
-    } catch (error) {
-      done(error);
-    }
+      expect(signInWithPopup).toHaveBeenCalledWith(mockAuth, mockGithubAuthProvider);
+    });
   });
 });
