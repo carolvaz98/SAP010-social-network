@@ -5,10 +5,16 @@ export const welcome = () => {
 
   const signInHTML = `
     <section class="container-parent">
-        <div class="containerWelcome">
-            <div class="bgContainer">
+        <div class="container-img-animals"> 
+         <img src="../img/animalsBgp.png" class="img-animals">
+         <div class="sobre-petChat"> Conecte-se no PetChat, compartilhe dúvidas e 
+         experiências sobre seus pets, faça novas conexões com amantes de animais e 
+         receba suporte em cuidados, alimentação e treinamento. 
+         </div>
+            <div class="containerWelcome">
+              <div class="bgContainer">
                 <img src="../img/comunicacao.jpg" class="bg">
-            </div>
+              </div>
                 <div class="divSignIn">
                 <img src="../img/logo_petchat.png" class="logoPetWelcome">
                         <p class="introSignIn">Bem-vindo(a) ao <strong>PetChat</strong></p>
@@ -41,8 +47,10 @@ export const welcome = () => {
 
                   <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
                 </div>
-          </div>
+            </div>
+       </div>
     </section>
+  
   `;
 
   container.innerHTML = signInHTML;
