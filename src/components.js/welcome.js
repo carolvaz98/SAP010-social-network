@@ -6,8 +6,8 @@ export const welcome = () => {
   const signInHTML = `
     <section class="container-parent">
         <div class="container-img-animals"> 
-         <img src="../img/animalsBgp.png" class="img-animals">
-         <div class="sobre-petChat"> Conecte-se no PetChat, compartilhe dúvidas e 
+          <img src="../img/animalsBgp.png" class="img-animals">
+            <div class="sobre-petChat"> Conecte-se no PetChat, compartilhe dúvidas e 
          experiências sobre seus pets, faça novas conexões com amantes de animais e 
          receba suporte em cuidados, alimentação e treinamento. 
          </div>
