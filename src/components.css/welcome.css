@@ -11,14 +11,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("img/comunicacao.jpg");
-  background-size: cover;
-  background-position: center;
+  background-image: url(http://t1.gstatic.com/images?q=tbn:ANd9GcTuyuZHfMG2MZ2sY2LXBfQAhGkKBT7VEThGykERAyFb-TrHfy3R);
+  background-repeat: repeat;
   font-family: 'Roboto', sans-serif;
 }
 
 .container-img-animals{
-  background-color: #dadcdfe8;
+  background-color: #a7caee;
   border-radius: 10px;
   padding: 50px;
   justify-content: center;
@@ -28,8 +27,8 @@ body {
   .img-animals{
     display: flex;
     justify-content: top;
-    margin-top: auto;
-    margin-left: 50px;
+    margin-top: 50px;
+    margin-left: 100px;
   }
     .sobre-petChat{
       top: 10px;
@@ -40,36 +39,40 @@ body {
     }
 
 .containerWelcome {
-  max-width: 390px;
+  max-width: 600px;
+  max-height: 700px;
   background-color: #fff;
   border: 2px solid rgba(0, 0, 0, 0.429);
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.55);
   padding: 20px;
-  margin-top: -350px;
-  margin-left: 650px;
+  margin-top: -425px;
+  margin-left: 700px;
   margin-right: 20px; /* Adicionamos essa propriedade para mover para a direita */
+  padding-top: 15px;
 }
   
 
 /* logo petchat */
 .logoPetWelcome {
-  width: 70%;
-  margin-bottom: -20px;
-  margin-left: 15%;
+  width: 145px;
+  margin-top: 4px;
+  margin-bottom: 7px;
+  margin-left: 27%;
 }
 
-/* texto bem vindo ao petchat */
+/* texto bem vindo ao petchat
 .introSignIn {
   margin-top: 20px;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 35px;
-}
+} */
 
-/* não sei - acessibilidade */ 
+/* nomes do inputs */ 
 .label {
   display: block;
-  margin-top: 10px;
+  font-size: 1rem;
+  margin-top: 20px;
   font-weight: bold;
 }
 
@@ -111,11 +114,11 @@ body {
 .btnSignIn,
 .btnGoogle,
 .btnGitHub {
-  background: linear-gradient(to right, #ed7c319e, #4473c48e);
+  background: linear-gradient(to right, #8bbff2, #78a0f1);
   color: #060606;
   width: 100%;
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: 17px;
+  padding: 8px;
   font-size: 16px;
   border-radius: 15px;
   cursor: pointer;
@@ -123,9 +126,18 @@ body {
 }
 
 /* altura botão GitHub */
-.btnGitHub {
+.btnGitHub,
+.btnGoogle {
+  width: 43%;
+  height: 40px;
+  font-size: 15px;
   margin-bottom: 20px;
+  margin-right: 1px;
+  margin-left: 12px;
+  margin-top: 3px;
 }
+
+
 
 /* botão criar uma conta */
 .btnRegister{
@@ -150,14 +162,14 @@ body {
 
 /* sombreamento botão sign in */
 .active {
-  color: #fff;
-  background: linear-gradient(to right, #4472c4, #ED7D31);
+  color: #000000;
+  background: linear-gradient(to right, #F6BA6F, #F6BA6F);
   backdrop-filter: blur(2px);
 }
 
 .active:hover {
   /* background-color: #4473c48e; */
-  color: #060606;
+  color: #ffffff;
 }
 
 .img-google {

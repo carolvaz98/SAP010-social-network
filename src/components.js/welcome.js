@@ -13,12 +13,9 @@ export const welcome = () => {
          </div>
             <div class="containerWelcome">
               <div class="bgContainer">
-                <img src="../img/comunicacao.jpg" class="bg">
               </div>
                 <div class="divSignIn">
-                <img src="../img/logo_petchat.png" class="logoPetWelcome">
-                        <p class="introSignIn">Bem-vindo(a) ao <strong>PetChat</strong></p>
-
+                <img src="../img/LogoPetChat.png" class="logoPetWelcome">
                         <label class='label' for="email">E-mail:</label>
                         <div class="inputGroup">
                           <i class="material-icons inputIcon">person_outline</i>
@@ -31,18 +28,18 @@ export const welcome = () => {
                             <input type="password" class="inputSignIn" id="pass" placeholder="*******" required minlength="6">
                         </div>
 
-                      <button class="btnSignIn active">Sign In</button>
+                      <button class="btnSignIn active">Entrar</button>
 
                       <p class="textOu">----------------------------- ou -----------------------------</p>
             
                       <button class="btnGoogle">
                         <img class="img-google" src="img/google_logo.png"/>
-                          Sign in com o Google
+                          Google
                       </button>
 
                       <button class="btnGitHub">
                         <img class="img-github" src="img/github.logo.png"/>
-                          Sign in com o GitHub
+                          GitHub
                       </button>
 
                   <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
