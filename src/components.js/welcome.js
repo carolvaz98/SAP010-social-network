@@ -47,6 +47,27 @@ export const welcome = () => {
     </div>
   </div>
 </section>
+<footer>
+<p> <strong> Projeto realizado durante o Bootcamp da Laboratória </strong> </p>
+
+<section class="contato">
+<p class="nome-aluna">Caroline Protásio</p>
+<i class="fab fa-github"></i>
+  <a href="https://github.com/carolprotasio"  target="_blank">GitHub</a> | <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/carol-prot%C3%A1sio-8b4a34249/" target="_blank">Linkedin</a>
+</section>
+
+<section class="contato">
+<p class="nome-aluna">Caroline Vaz</p>
+<i class="fab fa-github"></i>
+  <a href="https://github.com/carolvaz98"  target="_blank">GitHub</a> | <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/caroline-v-b95019121/" target="_blank">Linkedin</a>
+</section>
+
+<section class="contato">
+<p class="nome-aluna">Myllena M. Martins</p>
+<i class="fab fa-github"></i>
+  <a href="https://github.com/myllenammartins"  target="_blank">GitHub</a> | <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/myllenamirandamartins/" target="_blank">Linkedin</a>
+</section>
+</footer>
   
   `;
 
