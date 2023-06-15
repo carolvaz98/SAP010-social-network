@@ -4,49 +4,49 @@ export const welcome = () => {
   const container = document.createElement('div');
 
   const signInHTML = `
-    <section class="container-parent">
-        <div class="container-img-animals"> 
-          <img src="../img/animalsBgp.png" class="img-animals">
-            <div class="sobre-petChat"> Conecte-se no PetChat, compartilhe dúvidas e 
-         experiências sobre seus pets, faça novas conexões com amantes de animais e 
-         receba suporte em cuidados, alimentação e treinamento. 
-         </div>
-            <div class="containerWelcome">
-              <div class="bgContainer">
-              </div>
-                <div class="divSignIn">
-                <img src="../img/LogoPetChat.png" class="logoPetWelcome">
-                        <label class='label' for="email">E-mail:</label>
-                        <div class="inputGroup">
-                          <i class="material-icons inputIcon">person_outline</i>
-                            <input type="email" class="inputSignIn" id="email" placeholder="example@youremail.com" required>
-                        </div>
+  <section class="container-parent">
+  <div class="container-img-animals">
+    <img src="../img/animalsBgp.png" class="img-animals">
+    <div class="sobre-petChat">
+      Conecte-se no <strong>PetChat</strong>, compartilhe dúvidas e experiências sobre seus pets,
+       faça novas conexões com amantes de animais e receba suporte em cuidados, 
+       alimentação e treinamento.
+    </div>
+    <div class="containerWelcome">
+      <div class="bgContainer"></div>
+      <div class="divSignIn">
+        <img src="../img/LogoPetChat.png" class="logoPetWelcome">
+        <label class="label" for="email">E-mail:</label>
+        <div class="inputGroup">
+          <i class="material-icons inputIcon">person_outline</i>
+          <input type="email" class="inputSignIn" id="email" placeholder="example@youremail.com" required>
+        </div>
 
-                        <label class='label' for="pass">Senha:</label>
-                        <div class="inputGroup">
-                          <i class="material-icons inputIcon">lock</i>
-                            <input type="password" class="inputSignIn" id="pass" placeholder="*******" required minlength="6">
-                        </div>
+        <label class="label" for="pass">Senha:</label>
+        <div class="inputGroup">
+          <i class="material-icons inputIcon">lock</i>
+          <input type="password" class="inputSignIn" id="pass" placeholder="*******" required minlength="6">
+        </div>
 
-                      <button class="btnSignIn active">Entrar</button>
+        <button class="btnSignIn active">Entrar</button>
 
-                      <p class="textOu">----------------------------- ou -----------------------------</p>
-            
-                      <button class="btnGoogle">
-                        <img class="img-google" src="img/google_logo.png"/>
-                          Google
-                      </button>
+        <p class="textOu">----------------------------- ou -----------------------------</p>
 
-                      <button class="btnGitHub">
-                        <img class="img-github" src="img/github.logo.png"/>
-                          GitHub
-                      </button>
+        <button class="btnGoogle">
+          <img class="img-google" src="img/google_logo.png" />
+          Google
+        </button>
 
-                  <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
-                </div>
-            </div>
-       </div>
-    </section>
+        <button class="btnGitHub">
+          <img class="img-github" src="img/github.logo.png" />
+          GitHub
+        </button>
+
+        <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
+      </div>
+    </div>
+  </div>
+</section>
   
   `;
 

@@ -53,14 +53,11 @@ body {
   background-color: #fff;
   border: 3px inset #6f6f6f93;
   border-radius: 10px;
-  /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.55); */
   padding: 40px;
   left: 680px;
   bottom: 345px;
 }
 
-
-/* logo petchat */
 .logoPetWelcome {
   width: 145px;
   margin-top: 4px;
@@ -68,14 +65,6 @@ body {
   margin-left: 27%;
 }
 
-/* texto bem vindo ao petchat
-.introSignIn {
-  margin-top: 20px;
-  font-size: 1.5rem;
-  margin-bottom: 35px;
-} */
-
-/* nomes do inputs */
 .label {
   display: block;
   font-size: 1rem;
@@ -83,7 +72,6 @@ body {
   font-weight: bold;
 }
 
-/* não sei */
 .inputSignIn {
   width: 100%;
   margin-top: 5px;
@@ -93,12 +81,10 @@ body {
   border-radius: 15px;
 }
 
-/* não sei */
 .inputGroup {
   position: relative;
 }
 
-/* não sei */
 .inputIcon {
   position: absolute;
   left: 10px;
@@ -106,18 +92,15 @@ body {
   transform: translateY(-50%);
 }
 
-/* não sei */
 .material-icons {
   vertical-align: middle;
 }
 
-/* -------ou-------- */
 .textOu {
   text-align: center;
   padding: 15px;
 }
 
-/* botões */
 .btnSignIn,
 .btnGoogle,
 .btnGitHub {
@@ -132,7 +115,6 @@ body {
   font-weight: bolder;
 }
 
-/* altura botão GitHub */
 .btnGitHub,
 .btnGoogle {
   width: 43%;
@@ -144,18 +126,13 @@ body {
   margin-top: 3px;
 }
 
-
-
-/* botão criar uma conta */
 .btnRegister {
   display: flex;
   align-items: center;
   justify-content: center;
   color: #0421548e;
-  /* text-decoration: underline; */
   font-size: 24px;
   cursor: pointer;
-
 }
 
 .btnRegister:hover {
@@ -168,7 +145,6 @@ body {
   color: #fbfbfb;
 }
 
-/* sombreamento botão sign in */
 .active {
   color: #000000;
   background: linear-gradient(to right, #F6BA6F, #F6BA6F);
@@ -176,7 +152,6 @@ body {
 }
 
 .active:hover {
-  /* background-color: #4473c48e; */
   color: #ffffff;
 }
 
@@ -194,4 +169,37 @@ body {
 
 .petIcon {
   padding: 5px;
+}
+
+@media (max-width: 768px) {
+  .container-img-animals {
+    width: 100%;
+    height: auto;
+    right: 0;
+    margin-top: 500px;
+  }
+
+  .img-animals {
+    width: 100%;
+    left: 0;
+    top: 50px;
+  }
+
+  .sobre-petChat {
+    top: 60px;
+    left: 10%;
+    width: 80%;
+  }
+
+  .containerWelcome {
+    width: 100%;
+    height: auto;
+    left: 0;
+    bottom: 0;
+    margin-top: 30%;
+  }
+
+  .logoPetWelcome {
+    margin-left: 28%;
+  }
 }
