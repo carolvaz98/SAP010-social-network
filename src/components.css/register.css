@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -21,29 +28,31 @@
 }
 
 .containerRegister {
-  max-width: 390px;
-  background-color: #fff;
-  border: 2px solid rgba(0, 0, 0, 0.429);
+  position: relative;
+  width: 400px;
+  height: auto;
+  background-color: #ffffff;
+  border: 3px inset #6f6f6f93;
   border-radius: 10px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.55);
-  padding: 20px;
-  top: -3px;
-  left: auto;
-  right: 20px; /* Adicionamos essa propriedade para mover para a direita */
+  /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.55); */
+  padding: 40px;
+  left: 40px;
+  bottom: 5px;
 }
 
 .logoPetRegister {
-  width: 70%;
-  margin-bottom: -20px;
-  margin-left: 15%;
+  position: relative;
+  width: 150px;
+  bottom: 15px;
+  left: 85px;
 }
 
 /* texto cadastro de usuário */
 .register-h1 {
   text-align: center;
-  margin-top: 20px;
-  font-size: 1.8rem;
-  margin-bottom: 35px;
+  margin-top: 10px;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
 }
 
 .dados {
@@ -80,9 +89,10 @@
 
 .btn-reg,
 .btn-return {
-  background: linear-gradient(to right, #4473c4, #ED7D31);
+  background-color: #F6BA6F;
   color: black;
   width: 100%;
+  height: 35px;
   margin-top: 20px;
   padding: 10px;
   font-size: 16px;
@@ -97,8 +107,8 @@
 
 .btn-return:hover,
 .btn-reg:hover {
-  background-color: #4473c48e;
-  color: black;
+  background-color: #4473c4da;
+  color: rgb(255, 255, 255);
 } 
 
 /* style error */
@@ -110,7 +120,28 @@
   font-style: italic;
 }
 
-  ul{
-    list-style-type: none;
-    font-size: 12px;
+ul {
+  list-style-type: none;
+  font-size: 12px;
+}
+
+/* Media queries */
+@media (max-width: 1024px) {
+  .containerRegister {
+    width: 90%;
+    max-width: 400px;
   }
+}
+
+@media (max-width: 600px) {
+  .containerRegister {
+    padding: 20px;
+    left: 0;
+    right: 0;
+  }
+
+  .logoPetRegister {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
