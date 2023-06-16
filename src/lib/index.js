@@ -8,9 +8,10 @@ import {
   updateProfile,
   fetchSignInMethodsForEmail,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 
-import { auth } from './firebase.js';
+import { auth, app } from './firebase.js';
 
 // CRIAR USUÁRIO
 export const loginCreate = async (email, password, name) => {
@@ -66,4 +67,16 @@ export const loginGithub = async () => {
 export function userStateLogout() {
   const authLogOut = getAuth();
   signOut(authLogOut);
+}
+
+// MANTER USUÁRIO LOGADO (https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br)
+
+export function userAuthChanged(callback) {
+  try {
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, callback);
+  } catch (err) {
+    // eslint-disable-next-line
+    console.log('Erro ao verificar o estado de autenticação:', err);
+  }
 }
