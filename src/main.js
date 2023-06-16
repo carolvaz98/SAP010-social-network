@@ -1,6 +1,6 @@
 import { getUsers, db } from './lib/firebase.js';
 import { register } from './components.js/register.js';
-// import { feed } from './components.js/feed.js';
+import { feed } from './components.js/feed.js';
 import { welcome } from './components.js/welcome.js';
 // import { sobre } from './components.js/sobre.js';
 
@@ -14,6 +14,9 @@ const init = () => {
       break;
     case '#register':
       root.appendChild(register());
+      break;
+    case '#feed':
+      root.appendChild(feed());
       break;
     default:
       root.appendChild(welcome());
