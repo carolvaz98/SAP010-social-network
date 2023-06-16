@@ -51,7 +51,7 @@ export const welcome = () => {
             <footer>
                 <p> <strong> Projeto realizado durante o Bootcamp da Laboratória </strong> </p>
                     <section class="contato">
-                        <p class="nome-aluna">Caroline Protásio</p>
+                        <p class="nome-aluna">Carol Protásio</p>
                         <i class="fab fa-github"></i>
                           <a href="https://github.com/carolprotasio"  target="_blank">GitHub</a> | <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/carol-prot%C3%A1sio-8b4a34249/" target="_blank">Linkedin</a>
                     </section>

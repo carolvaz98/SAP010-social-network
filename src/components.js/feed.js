@@ -5,19 +5,24 @@ export const feed = () => {
   const feedHTML = `
     <main class='bg'>  
       <nav>
-        <img src="../img/LogoPetChat.png" alt="LogoPetChat" class="logo">
+        <img src="../img/logo-petChat-bg.png" alt="LogoPetChat" class="logo">
         <ul>
           <li id="username"></li>
-          <li id="logout">Sair</li>
         </ul>
+
+        <button type="submit" class="btn-sair"> Sair </button>
+
       </nav>
+
       <section class="main">  
-        <div id="commentsContainer"></div>
+        <div id="commentsContainer">
         <form id="commentForm">
           <textarea id="commentInput" placeholder="Digite seu comentário"></textarea>
-          <button type="submit">Enviar</button>
+          <button type="submit" class="btn-enviar">Enviar</button>
         </form>
+        </div>
       </section>
+
     <main>
     `; container.innerHTML = feedHTML;
   const commentsContainer = container.querySelector('#commentsContainer');
