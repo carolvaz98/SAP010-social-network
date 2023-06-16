@@ -1,4 +1,5 @@
 //import { db, auth } from '../firebase';
+import { userStateLogout, userAuthChanged } from '../lib/index.js'
 
 export const feed = () => {
   const container = document.createElement('div');
@@ -31,5 +32,18 @@ export const feed = () => {
   const logoutElement = container.querySelector('#logout');
   const usernameElement = container.querySelector('#username');
   const submitElement = container.querySelector('#submit');
+
+  logoutElement.addEventListener('click', async () => {
+    try {
+      // eslint-disable-next-line no-console
+      console.log('Deslogado');
+      await userStateLogout(userAuthChanged);
+      window.location.href = '#welcome';
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Error: Não foi possivel fazer o logout: ', error);
+    }
+  });
+
   return container;
 };
