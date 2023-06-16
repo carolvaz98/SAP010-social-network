@@ -1,4 +1,4 @@
-import { db, auth } from '../firebase';
+//import { db, auth } from '../firebase';
 
 export const feed = () => {
   const container = document.createElement('div');
@@ -26,5 +26,5 @@ export const feed = () => {
   const logoutElement = container.querySelector('#logout');
   const usernameElement = container.querySelector('#username');
   const submitElement = container.querySelector('#submit');
-
+  return container;
 };

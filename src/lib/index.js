@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   updateProfile,
   fetchSignInMethodsForEmail,
+  signOut,
 } from 'firebase/auth';
 
 import { auth } from './firebase.js';
@@ -60,3 +61,9 @@ export const loginGithub = async () => {
     throw new Error('Ocorreu um erro ao utilizar o login GitHub, tente novamente.');
   }
 };
+
+// FUNÇÃO PARA USUÁRIO SAIR DO SITE (??? try/catch)
+export function userStateLogout() {
+  const authLogOut = getAuth();
+  signOut(authLogOut);
+}
