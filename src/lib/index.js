@@ -12,6 +12,7 @@ import {
 } from 'firebase/auth';
 
 import { auth, app } from './firebase.js';
+import { collection, getDocs, addDoc } from 'firebase/firestore/lite';
 
 // CRIAR USUÁRIO
 export const loginCreate = async (email, password, name) => {
@@ -79,4 +80,21 @@ export function userAuthChanged(callback) {
     // eslint-disable-next-line
     console.log('Erro ao verificar o estado de autenticação:', err);
   }
+}
+
+// FUNÇÃO PARA ADICIONAR COMENTARIO NO BANCO DE DADOS
+// comments é como está salvo no firabase, onde será adicionado os comentarios
+export async function addPost(db, comments) {
+  const commentsColl = collection(db, 'comments');
+  await addDoc(comments, commentsColl);
+}
+export async function getPosts(db) {
+  const commColl = collection(db, 'comments');
+  const postsSnapshot = await getDocs(commColl);
+  // eslint-disable-next-line no-shadow
+  const commList = postsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return commList;
 }
