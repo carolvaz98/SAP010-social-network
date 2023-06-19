@@ -23,9 +23,14 @@ export const welcome = () => {
                   </div>
 
               <label class="label" for="pass">Senha:</label>
+
               <div class="inputGroup">
                   <i class="material-icons inputIcon">lock</i>
                   <input type="password" class="inputSignIn" id="pass" placeholder="*******" required minlength="6">
+              </div>
+
+              <div id="error-container-email">
+              <ul class="error-email-password"></ul>
               </div>
 
             <button class="btnSignIn active">Entrar</button>
@@ -41,6 +46,10 @@ export const welcome = () => {
                   <img class="img-github" src="img/github.logo.png" />
                   GitHub
                 </button>
+
+                <div id="error-Google-Github">
+                <ul class="error-Google-Github"></ul>
+                </div>
 
               <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
           </div>
@@ -72,6 +81,9 @@ export const welcome = () => {
 
   container.innerHTML = signInHTML;
 
+  const errorEmailPassword = container.querySelector('.error-email-password');
+  const errorGoogleGithub = container.querySelector('.error-Google-Github')
+
   const inputEmail = container.querySelector('.inputSignIn[type="email"]');
   const inputPass = container.querySelector('.inputSignIn[type="password"]');
   const btnSignIn = container.querySelector('.btnSignIn');
@@ -86,31 +98,54 @@ export const welcome = () => {
     const email = inputEmail.value;
     const password = inputPass.value;
 
-    if (email && password) {
-      loginUser(email, password);
+    errorEmailPassword.innerHTML = '';
+    errorGoogleGithub.innerHTML = '';
+    //errorGithub.innerHTML = '';
+
+    try {
+      await loginUser(email, password);
       window.location.hash = '#feed';
+    } catch (error) {
+      const errorItem = document.createElement('li');
+      errorItem.textContent = error.message;
+      const errorEmailPassword = container.querySelector('.error-email-password');
+      errorEmailPassword.appendChild(errorItem);
     }
+
   });
 
-  // BOTÃO PARA SE CADASTRAR (NOVO USUÁRIO)
   btnRegister.addEventListener('click', (event) => {
     event.preventDefault();
     window.location.hash = '#register';
   });
 
-  // LOGAR COM O GOOGLE
   btnGoogle.addEventListener('click', async (event) => {
     event.preventDefault();
-    loginGoogle();
-    window.location.hash = '#feed';
+    try {
+      await loginGoogle();
+      window.location.hash = '#feed';
+    } catch (error) {
+      const errorItem = document.createElement('li');
+      errorItem.textContent = error.message;
+      const errorGoogleGithub = container.querySelector('.error-Google-Github');
+      errorGoogleGithub.appendChild(errorItem);
+    }
+
   });
 
-  // LOGAR COM O GITHUB
-  btnGitHub.addEventListener('click', async (event) => {
+  /* btnGitHub.addEventListener('click', async (event) => {
     event.preventDefault();
-    loginGithub();
-    window.location.hash = '#feed';
-  });
+    try {
+      await loginGithub();
+      window.location.hash = '#feed';
+    } catch (error) {
+      const errorItem = document.createElement('li');
+      errorItem.textContent = error.message;
+      const errorGoogleGithub = container.querySelector('.error-Google-Github');
+      errorGoogleGithub.appendChild(errorItem);
+    }
+
+  }); */
 
   return container;
 };
