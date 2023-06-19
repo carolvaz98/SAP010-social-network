@@ -1,5 +1,5 @@
-//import { db, auth } from '../firebase';
-import { userStateLogout, userAuthChanged } from '../lib/index.js'
+// import { db, auth } from '../firebase';
+// import { userStateLogout, userAuthChanged } from '../lib/index.js';
 
 export const feed = () => {
   const container = document.createElement('div');

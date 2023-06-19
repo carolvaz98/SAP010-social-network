@@ -73,9 +73,9 @@ export function userStateLogout() {
 
 export function userAuthChanged(callback) {
   try {
-    const auth = getAuth(app);
-    onAuthStateChanged(auth, callback);
-  } catch (err) {
+    const authLogin = getAuth(app);
+    onAuthStateChanged(authLogin, callback);
+  } catch (error) {
     // eslint-disable-next-line
     console.log('Erro ao verificar o estado de autenticação:', err);
   }
