@@ -23,6 +23,7 @@ const init = () => {
   }
 };
 window.addEventListener('load', () => {
+  // eslint-disable-next-line no-console
   getUsers(db).then((data) => console.log(data));
   init();
 });

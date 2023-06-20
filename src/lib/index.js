@@ -1,5 +1,12 @@
-import { collection, getDocs, addDoc } from 'firebase/firestore/lite';
-
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+  doc,
+  getFirestore,
+} from 'firebase/firestore/lite';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -87,8 +94,10 @@ export function userAuthChanged(callback) {
 // comments é como está salvo no firabase, onde será adicionado os comentarios
 export async function addPost(db, comments) {
   const commentsColl = collection(db, 'comments');
-  await addDoc(comments, commentsColl);
+  await addDoc(commentsColl, comments);
 }
+
+// RECUPERA TODOS OS COMENTÁRIOS DO DB, MAPEIA E TRAZ TODOS EM LISTA PARA O SITE
 export async function getPosts(db) {
   const commColl = collection(db, 'comments');
   const postsSnapshot = await getDocs(commColl);
@@ -98,4 +107,18 @@ export async function getPosts(db) {
     ...doc.data(),
   }));
   return commList;
+}
+
+// DELETAR UM POST
+export async function deletePost(postId) {
+  const db = getFirestore(app);
+  await deleteDoc(doc(db, 'comments', postId));
+  console.log('Comentário excluído com sucesso!');
+}
+
+// EDITAR UM POST
+export async function updatePost(postId, updatedComment) {
+  const db = getFirestore(app);
+  await updateDoc(doc(db, 'comments', postId), updatedComment);
+  console.log('Comentário atualizado com sucesso!');
 }

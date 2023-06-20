@@ -1,20 +1,5 @@
 import { loginCreate, emailDuplicate } from '../lib/index.js';
 
-export const validateName = (validName) => {
-  const regexName = /^[a-zA-Z]{2,}$/;
-  return regexName.test(validName);
-};
-
-export const validateEmail = (validEmail) => {
-  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regexEmail.test(validEmail);
-};
-
-export const validatePassword = (validPassword) => {
-  const regexPassword = /^.{6,}$/;
-  return regexPassword.test(validPassword);
-};
-
 export const register = () => {
   const container = document.createElement('div');
   const registerHTML = `
@@ -96,82 +81,55 @@ export const register = () => {
 
     const email = inputEmail.value;
     const password = inputPassword.value;
-    const confirm = inputConfirmPassword.value;
     const name = inputName.value;
 
-    // Limpa os erros anteriores
+    // Limpar erros anteriores
     errorNameContainer.innerHTML = '';
     errorEmailContainer.innerHTML = '';
     errorPasswordContainer.innerHTML = '';
     errorConfirmContainer.innerHTML = '';
 
-    // Lista as mensagens de erro
-    const MessageErrorName = [];
-    const MessageErrorEmail = [];
-    const MessageErrorPassword = [];
-    const MessageErrorConfirm = [];
-
-    if (!validateEmail(email)) {
-      MessageErrorEmail.push('E-mail inválido. Insira um endereço de e-mail válido.');
+    // Validar nome
+    if (name === '') {
+      errorNameContainer.innerHTML = '<li>Por favor, informe seu nome.</li>';
     }
 
-    if (!validatePassword(password)) {
-      MessageErrorPassword.push('Senha inválida. A senha deve conter pelo menos 6 caracteres.');
+    // Validar e-mail
+    if (email === '') {
+      errorEmailContainer.innerHTML = '<li>Por favor, informe seu e-mail.</li>';
+    } else if (!email.includes('@')) {
+      errorEmailContainer.innerHTML = '<li>Por favor, informe um e-mail válido.</li>';
+    } else if (await emailDuplicate(email)) {
+      errorEmailContainer.innerHTML = '<li>O e-mail informado já está em uso.</li>';
     }
 
-    if (confirm !== password) {
-      MessageErrorConfirm.push('As senhas não coincidem. Por favor, digite a mesma senha nos dois campos.');
+    // Validar senha
+    if (password === '') {
+      errorPasswordContainer.innerHTML = '<li>Por favor, informe sua senha.</li>';
+    } else if (password.length < 6) {
+      errorPasswordContainer.innerHTML = '<li>A senha deve ter pelo menos 6 caracteres.</li>';
     }
 
-    if (!validateName(name)) {
-      MessageErrorName.push('Nome inválido. O nome deve conter pelo menos 2 letras e apenas caracteres alfabéticos.');
+    // Validar confirmação de senha
+    if (inputConfirmPassword.value !== password) {
+      errorConfirmContainer.innerHTML = '<li>As senhas informadas não coincidem.</li>';
     }
 
-    if (MessageErrorEmail.length > 0) {
-      MessageErrorEmail.forEach((error) => {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = error;
-        errorEmailContainer.appendChild(errorItem);
-      });
-    }
-
-    if (MessageErrorPassword.length > 0) {
-      MessageErrorPassword.forEach((error) => {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = error;
-        errorPasswordContainer.appendChild(errorItem);
-      });
-    }
-
-    if (MessageErrorConfirm.length > 0) {
-      MessageErrorConfirm.forEach((error) => {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = error;
-        errorConfirmContainer.appendChild(errorItem);
-      });
-    }
-
-    if (MessageErrorName.length > 0) {
-      MessageErrorName.forEach((error) => {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = error;
-        errorNameContainer.appendChild(errorItem);
-      });
-    } else {
-      const emailExists = await emailDuplicate(email);
-
-      if (emailExists) {
-        const errorItem = document.createElement('li');
-        errorItem.textContent = 'O e-mail já está cadastrado.';
-        errorEmailContainer.appendChild(errorItem);
-      } else {
-        loginCreate(email, password, confirm);
-        // eslint-disable-line no-alert
+    // Se não houver erros, criar o usuário
+    if (errorNameContainer.innerHTML === '' && errorEmailContainer.innerHTML === '' && errorPasswordContainer.innerHTML === '' && errorConfirmContainer.innerHTML === '') {
+      try {
+        await loginCreate(email, password, name);
         // eslint-disable-next-line no-alert
         alert('Cadastro efetuado com sucesso!! Você será direcionado à página inicial para efetuar o login.');
         window.location.href = '';
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        // eslint-disable-next-line no-alert
+        alert('Ocorreu um erro ao criar o usuário, tente novamente.');
       }
     }
   });
+
   return container;
 };
