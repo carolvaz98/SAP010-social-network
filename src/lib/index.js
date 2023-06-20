@@ -1,3 +1,5 @@
+import { collection, getDocs, addDoc } from 'firebase/firestore/lite';
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -12,7 +14,6 @@ import {
 } from 'firebase/auth';
 
 import { auth, app } from './firebase.js';
-import { collection, getDocs, addDoc } from 'firebase/firestore/lite';
 
 // CRIAR USUÁRIO
 export const loginCreate = async (email, password, name) => {
