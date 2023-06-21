@@ -60,21 +60,22 @@ export const feed = () => {
     }
   });
 
-  // TRAZ OS COMENTÁRIOS
-  async function displayComments() {
-    commentSection.innerHTML = ''; // Limpa o conteúdo anterior dos comentários
-    try {
-      const comments = await getPosts(db);
+ // TRAZ OS COMENTÁRIOS
+async function displayComments() {
+  commentSection.innerHTML = ''; // Limpa o conteúdo anterior dos comentários
 
-      // Ordenar os comentários por data
-      comments.sort((a, b) => new Date(a.data) - new Date(b.data));
+  try {
+    const comments = await getPosts(db);
 
-      comments.forEach((post) => {
-        const postContainer = document.createElement('div');
-        postContainer.innerHTML = `
+    // Ordenar os comentários por data
+    comments.sort((a, b) => new Date(a.data) - new Date(b.data));
+
+    comments.forEach((post) => {
+      const postContainer = document.createElement('div');
+      postContainer.innerHTML = `
         <div class="posts">
           <div class="barra">
-          <p class="usuario">${post.Usuario}</p>
+            <p class="usuario">${post.Usuario}</p>
           </div>
           <p class="comentario">${post.Comentario}</p>
           <p class="data">${post.data}</p>
@@ -85,11 +86,11 @@ export const feed = () => {
           <button class="btn-delete">🗑️</button>
           ` : ''}
         </div>
-        `;
+      `;
 
-        const editButton = postContainer.querySelector('.btn-edit');
-        const deleteButton = postContainer.querySelector('.btn-delete');
-        const likeButton = postContainer.querySelector('.btn-like');
+      const editButton = postContainer.querySelector('.btn-edit');
+      const deleteButton = postContainer.querySelector('.btn-delete');
+      const likeButton = postContainer.querySelector('.btn-like');
 
         // BOTÃO DE EDITAR O COMENTÁRIO
         if (editButton) {
@@ -156,7 +157,11 @@ export const feed = () => {
   commentForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const commentText = commentInput.value;
+    const commentText = commentInput.value.trim();
+    if (commentText === '') {
+      return; // Retorna se o comentário estiver vazio
+    }
+
     const commentData = new Date().toLocaleString('pt-BR', {
       day: '2-digit',
       month: '2-digit',
