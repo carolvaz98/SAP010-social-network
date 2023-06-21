@@ -7,7 +7,7 @@ import {
   doc,
   getFirestore,
   increment,
-  FieldValue,
+  // FieldValue,
 } from 'firebase/firestore/lite';
 import {
   getAuth,
@@ -148,4 +148,3 @@ export async function getLikeData(postId) {
     likeCount,
   };
 }
-

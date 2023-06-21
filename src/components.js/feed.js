@@ -7,7 +7,7 @@ import {
   deletePost,
   updatePost,
   likePost,
-  getLikeData,
+  // getLikeData,
 } from '../lib/index.js';
 
 export const feed = () => {
@@ -43,10 +43,12 @@ export const feed = () => {
   // BOTÃO DE SAIR
   logoutElement.addEventListener('click', async () => {
     try {
+      // eslint-disable-next-line no-console
       console.log('logged out');
       userStateLogout(userAuthChanged);
       window.location.href = '';
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Erro ao deslogar', error);
     }
   });
@@ -54,40 +56,7 @@ export const feed = () => {
   // ADICIONA O NOME DO USUÁRIO
   userAuthChanged((user) => {
     if (user) {
-      usernameElement.textContent = `Bem vindo(a) ${user.displayName}`;
-    }
-  });
-
-  // GUARDA OS COMENTÁRIOS
-  commentForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const commentText = commentInput.value;
-    const commentData = new Date().toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-
-    // objeto com as informações do comentário
-    const comment = {
-      Usuario: auth.currentUser.displayName,
-      Comentario: commentText,
-      data: commentData,
-      // Curtir: {},
-    };
-
-    // adiciona o comentário ao banco de dados
-    try {
-      await addPost(db, comment);
-      // Limpa o campo de entrada de comentário
-      commentInput.value = '';
-      // Atualiza a exibição dos comentários após adicionar um novo comentário
-      displayComments();
-    } catch (error) {
-      console.log('Erro ao adicionar o comentário:', error);
+      usernameElement.textContent = `Bem-vindo(a), ${user.displayName}`;
     }
   });
 
@@ -97,61 +66,67 @@ export const feed = () => {
     try {
       const comments = await getPosts(db);
 
-      comments.forEach(async (post) => {
+      // Ordenar os comentários por data
+      comments.sort((a, b) => new Date(a.data) - new Date(b.data));
+
+      comments.forEach((post) => {
         const postContainer = document.createElement('div');
         postContainer.innerHTML = `
         <div class="posts">
           <div class="barra">
-          <p class="usuario"><strong>Usuário:</strong> ${post.Usuario}</p></div>
-          <p class="comentario"><strong>Comentário:</strong> ${post.Comentario}</p>
+          <p class="usuario">${post.Usuario}</p>
+          </div>
+          <p class="comentario">${post.Comentario}</p>
           <p class="data">${post.data}</p>
           <button class="btn-like" data-comment-id="${post.id}">❤️</button>
           <span class="countLikes">0</span>
-          <button class="btn-edit" data-comment-id="${post.id}">🖊️</button>
-          <button class="btn-delete" data-comment-id="${post.id}">🗑️</button>
-          
+          ${post.Usuario === auth.currentUser.displayName ? `
+          <button class="btn-edit">🖊️</button>
+          <button class="btn-delete">🗑️</button>
+          ` : ''}
         </div>
         `;
 
         const editButton = postContainer.querySelector('.btn-edit');
         const deleteButton = postContainer.querySelector('.btn-delete');
         const likeButton = postContainer.querySelector('.btn-like');
-        // const countLikes = postContainer.querySelector('.countLikes');
-
-        // Verifica se o usuário atual já curtiu o comentário
-        const userLiked = post.Curtir && post.Curtir[auth.currentUser.uid];
-
-        // Define o estado inicial do botão de curtir com base no usuário atual
-        likeButton.textContent = userLiked ? 'Descurtir' : 'Curtir';
 
         // BOTÃO DE EDITAR O COMENTÁRIO
-        editButton.addEventListener('click', () => {
-          const editComment = prompt('Digite o novo comentário:');
-          if (editComment) {
-            updatePost(post.id, { Comentario: editComment })
-              .then(() => {
-                // Atualiza a exibição dos comentários após editar um comentário
-                displayComments();
-              })
-              .catch((error) => {
-                console.log('Erro ao editar o comentário:', error);
-              });
-          }
-        });
-
+        if (editButton) {
+          editButton.addEventListener('click', () => {
+            // eslint-disable-next-line no-alert
+            const confirmEdit = window.prompt('Digite o novo comentário:');
+            if (confirmEdit) {
+              updatePost(post.id, { Comentario: confirmEdit })
+                .then(() => {
+                  // Atualiza a exibição dos comentários após editar um comentário
+                  displayComments();
+                })
+                .catch((error) => {
+                  // eslint-disable-next-line no-console
+                  console.log('Erro ao editar o comentário:', error);
+                });
+            }
+          });
+        }
         // BOTÃO DE DELETAR O COMENTÁRIO
-        deleteButton.addEventListener('click', () => {
-          if (confirm('Deseja excluir este comentário?')) {
-            deletePost(post.id)
-              .then(() => {
-                // Atualiza a exibição dos comentários após excluir um comentário
-                displayComments();
-              })
-              .catch((error) => {
-                console.log('Erro ao excluir o comentário:', error);
-              });
-          }
-        });
+        if (deleteButton) {
+          deleteButton.addEventListener('click', () => {
+            // eslint-disable-next-line no-alert
+            const confirmDelete = window.confirm('Deseja excluir este comentário?');
+            if (confirmDelete) {
+              deletePost(post.id)
+                .then(() => {
+                  // Atualiza a exibição dos comentários após excluir um comentário
+                  displayComments();
+                })
+                .catch((error) => {
+                  // eslint-disable-next-line no-console
+                  console.log('Erro ao excluir o comentário:', error);
+                });
+            }
+          });
+        }
         // FUNÇÃO DE DAR O LIKE
         likeButton.addEventListener('click', async () => {
           const commentId = likeButton.getAttribute('data-comment-id');
@@ -172,9 +147,42 @@ export const feed = () => {
         commentSection.appendChild(postContainer);
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Erro ao carregar os comentários:', error);
     }
   }
+
+  // GUARDA OS COMENTÁRIOS
+  commentForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const commentText = commentInput.value;
+    const commentData = new Date().toLocaleString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+
+    // objeto com as informações do comentário
+    const comment = {
+      Usuario: auth.currentUser.displayName,
+      Comentario: commentText,
+      data: commentData,
+      Curtir: [],
+    };
+
+    // adiciona o comentário ao banco de dados
+    try {
+      await addPost(db, comment);
+      // Limpa o campo de entrada de comentário
+      commentInput.value = '';
+      // Atualiza a exibição dos comentários após adicionar um novo comentário
+      displayComments();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Erro ao adicionar o comentário:', error);
+    }
+  });
 
   displayComments();
 
