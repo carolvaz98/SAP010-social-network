@@ -60,19 +60,19 @@ export const feed = () => {
     }
   });
 
- // TRAZ OS COMENTÁRIOS
-async function displayComments() {
-  commentSection.innerHTML = ''; // Limpa o conteúdo anterior dos comentários
+  // TRAZ OS COMENTÁRIOS
+  async function displayComments() {
+    commentSection.innerHTML = ''; // Limpa o conteúdo anterior dos comentários
 
-  try {
-    const comments = await getPosts(db);
+    try {
+      const comments = await getPosts(db);
 
-    // Ordenar os comentários por data
-    comments.sort((a, b) => new Date(a.data) - new Date(b.data));
+      // Ordenar os comentários por data
+      comments.sort((a, b) => new Date(a.data) - new Date(b.data));
 
-    comments.forEach((post) => {
-      const postContainer = document.createElement('div');
-      postContainer.innerHTML = `
+      comments.forEach((post) => {
+        const postContainer = document.createElement('div');
+        postContainer.innerHTML = `
         <div class="posts">
           <div class="barra">
             <p class="usuario">${post.Usuario}</p>
@@ -88,9 +88,9 @@ async function displayComments() {
         </div>
       `;
 
-      const editButton = postContainer.querySelector('.btn-edit');
-      const deleteButton = postContainer.querySelector('.btn-delete');
-      const likeButton = postContainer.querySelector('.btn-like');
+        const editButton = postContainer.querySelector('.btn-edit');
+        const deleteButton = postContainer.querySelector('.btn-delete');
+        const likeButton = postContainer.querySelector('.btn-like');
 
         // BOTÃO DE EDITAR O COMENTÁRIO
         if (editButton) {
