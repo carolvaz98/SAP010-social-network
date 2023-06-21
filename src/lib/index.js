@@ -7,6 +7,7 @@ import {
   doc,
   getFirestore,
   increment,
+  FieldValue,
 } from 'firebase/firestore/lite';
 import {
   getAuth,
@@ -124,19 +125,27 @@ export async function updatePost(postId, updatedComment) {
   console.log('Comentário atualizado com sucesso!');
 }
 
-/* // FUNÇÃO DE DAR O LIKE
-export async function postLike(commentsId) {
-  // eslint-disable-next-line no-console
-  console.log('postLike called with commentsId:', commentsId);
-  // getFirestone é chamada passando a instância do aplicativo app como argumento.
-  // Ela retorna uma referência ao Firestore, que é armazenada na variável db
+// FUNÇÃO DE DAR O LIKE
+export async function likePost(postId) {
   const db = getFirestore(app);
-  // doc é chamada passando referência para o FB(firebase) na (abaixo)
-  // coleção 'comments' e o commentsId é passado como argumento
-  const likeRef = doc(db, 'comments', commentsId);
-  // a função updateDoc é chamada passando a referência do documento (likeRef)
-  // e um objeto contendo a atualização desejada.
-  await updateDoc(likeRef, {
+  const docRef = doc(db, 'comments', postId);
+  await updateDoc(docRef, {
     like: increment(1),
   });
-} */
+}
+// FUNÇÃO PARA BUSCAR OD DADOS DOS LIKES
+export async function getLikeData(postId) {
+  const db = getFirestore(app);
+  const docRef = doc(db, 'comments', postId);
+  const docSnapshot = await getDocs(docRef);
+  const commentData = docSnapshot.data();
+
+  const userLiked = commentData.like && commentData.like[auth.currentUser.uid] === 1;
+  const likeCount = commentData.likeCount || 0;
+
+  return {
+    userLiked,
+    likeCount,
+  };
+}
+

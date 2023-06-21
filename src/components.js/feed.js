@@ -6,6 +6,8 @@ import {
   getPosts,
   deletePost,
   updatePost,
+  likePost,
+  getLikeData,
 } from '../lib/index.js';
 
 export const feed = () => {
@@ -95,7 +97,7 @@ export const feed = () => {
     try {
       const comments = await getPosts(db);
 
-      comments.forEach((post) => {
+      comments.forEach(async (post) => {
         const postContainer = document.createElement('div');
         postContainer.innerHTML = `
         <div class="posts">
@@ -103,17 +105,18 @@ export const feed = () => {
           <p class="usuario"><strong>Usuário:</strong> ${post.Usuario}</p></div>
           <p class="comentario"><strong>Comentário:</strong> ${post.Comentario}</p>
           <p class="data">${post.data}</p>
+          <button class="btn-like" data-comment-id="${post.id}">❤️</button>
           <span class="countLikes">0</span>
-          <button class="btn-edit">Editar</button>
-          <button class="btn-delete">Deletar</button>
-          <button class="btn-like" data-comment-id="${post.id}">Curtir</button>
+          <button class="btn-edit" data-comment-id="${post.id}">🖊️</button>
+          <button class="btn-delete" data-comment-id="${post.id}">🗑️</button>
+          
         </div>
         `;
 
         const editButton = postContainer.querySelector('.btn-edit');
         const deleteButton = postContainer.querySelector('.btn-delete');
         const likeButton = postContainer.querySelector('.btn-like');
-        //const countLikes = postContainer.querySelector('.countLikes');
+        // const countLikes = postContainer.querySelector('.countLikes');
 
         // Verifica se o usuário atual já curtiu o comentário
         const userLiked = post.Curtir && post.Curtir[auth.currentUser.uid];
@@ -149,27 +152,22 @@ export const feed = () => {
               });
           }
         });
-
-        /* /// FUNÇÃO DE DAR O LIKE
+        // FUNÇÃO DE DAR O LIKE
         likeButton.addEventListener('click', async () => {
           const commentId = likeButton.getAttribute('data-comment-id');
+          const countLikes = postContainer.querySelector('.countLikes');
+          const likeCurrent = Number(countLikes.textContent);
 
-          if (userLiked) {
-            // Se o usuário já curtiu, remove a curtida
-            await updatePost(post.id, {
-              [`Curtir.${auth.currentUser.uid}`]: false, // Atualiza o valor para false
-            });
-            countLikes.textContent = Number(countLikes.textContent) - 1;
-            likeButton.textContent = 'Curtir';
+          if (likeButton.classList.contains('liked')) {
+            await likePost(commentId, false);
+            countLikes.textContent = likeCurrent - 1;
+            likeButton.classList.remove('liked');
           } else {
-            // Se o usuário ainda não curtiu, adiciona a curtida
-            await updatePost(post.id, {
-              [`Curtir.${auth.currentUser.uid}`]: true, // Atualiza o valor para true
-            });
-            countLikes.textContent = Number(countLikes.textContent) + 1;
-            likeButton.textContent = 'Descurtir';
+            await likePost(commentId, true);
+            countLikes.textContent = likeCurrent + 1;
+            likeButton.classList.add('liked');
           }
-        }); */
+        });
 
         commentSection.appendChild(postContainer);
       });
