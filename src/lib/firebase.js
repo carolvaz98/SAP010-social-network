@@ -19,7 +19,8 @@ export const db = getFirestore(app);
 // a coleção de usuários do banco de dados e retorna uma lista com os dados desses usuários.
 export async function getUsers(database) {
   const usersCol = collection(database, 'users');
+  // aguarda a operação de trazer os dados antes de prosseguir
   const userSnapshot = await getDocs(usersCol);
-  const userList = userSnapshot.docs.map((doc) => doc.data());
-  return userList;
+  // retorna um array com os dados mapeados de cada doc. o data() extrai os doc do firestore
+  return userSnapshot.docs.map((doc) => doc.data());
 }

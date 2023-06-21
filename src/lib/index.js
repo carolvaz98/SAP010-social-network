@@ -53,25 +53,17 @@ export const emailDuplicate = async (email) => {
 };
 
 // LOGAR COM CONTA GOOGLE
-export const loginGoogle = async () => {
-  try {
-    const authInstance = getAuth();
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(authInstance, provider);
-  } catch (error) {
-    throw new Error('Ocorreu um erro ao utilizar o login Google, tente novamente.');
-  }
+export const loginGoogle = () => {
+  const authInstance = getAuth();
+  const provider = new GoogleAuthProvider();
+  return signInWithPopup(authInstance, provider);
 };
 
 // LOGAR COM CONTA GITHUB
-export const loginGithub = async () => {
-  try {
-    const authInstance = getAuth();
-    const provider = new GithubAuthProvider();
-    return signInWithPopup(authInstance, provider);
-  } catch (error) {
-    throw new Error('Ocorreu um erro ao utilizar o login GitHub, tente novamente.');
-  }
+export const loginGithub = () => {
+  const authInstance = getAuth();
+  const provider = new GithubAuthProvider();
+  return signInWithPopup(authInstance, provider);
 };
 
 // FUNÇÃO PARA USUÁRIO SAIR DO SITE (??? try/catch)
