@@ -126,10 +126,6 @@ export async function likePost(postId) {
   });
 }
 
-
-
-
-
 /* FUNÇÃO PARA BUSCAR OD DADOS DOS LIKES
 export async function getLikeData(postId) {
   const db = getFirestore(app);
