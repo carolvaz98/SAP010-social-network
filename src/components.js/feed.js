@@ -76,14 +76,14 @@ export const feed = () => {
         <div class="posts">
           <div class="barra">
             <p class="usuario">${post.Usuario}</p>
+            <p class="data">${post.data}</p>
           </div>
           <p class="comentario">${post.Comentario}</p>
-          <p class="data">${post.data}</p>
-          <button class="btn-like" data-comment-id="${post.id}">❤️</button>
+          <a class="btn-like" data-comment-id="${post.id}">❤️</button>
           <span class="countLikes">0</span>
           ${post.Usuario === auth.currentUser.displayName ? `
-          <button class="btn-edit">🖊️</button>
-          <button class="btn-delete">🗑️</button>
+          <a class="btn-edit">🖊️</button>
+          <a class="btn-delete">🗑️</button>
           ` : ''}
         </div>
       `;
@@ -173,7 +173,6 @@ export const feed = () => {
       Usuario: auth.currentUser.displayName,
       Comentario: commentText,
       data: commentData,
-      Curtir: [],
     };
 
     // adiciona o comentário ao banco de dados

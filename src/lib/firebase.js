@@ -22,5 +22,6 @@ export async function getUsers(database) {
   // aguarda a operação de trazer os dados antes de prosseguir
   const userSnapshot = await getDocs(usersCol);
   // retorna um array com os dados mapeados de cada doc. o data() extrai os doc do firestore
+ 
   return userSnapshot.docs.map((doc) => doc.data());
 }

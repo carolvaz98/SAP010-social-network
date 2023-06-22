@@ -125,7 +125,12 @@ export async function likePost(postId) {
     like: increment(1),
   });
 }
-// FUNÇÃO PARA BUSCAR OD DADOS DOS LIKES
+
+
+
+
+
+/* FUNÇÃO PARA BUSCAR OD DADOS DOS LIKES
 export async function getLikeData(postId) {
   const db = getFirestore(app);
   const docRef = doc(db, 'comments', postId);
@@ -139,4 +144,4 @@ export async function getLikeData(postId) {
     userLiked,
     likeCount,
   };
-}
+} */
