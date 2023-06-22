@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { addDoc, collection, getDocs } from 'firebase/firestore/lite';
 
 import {
   createUserWithEmailAndPassword,
@@ -19,6 +19,7 @@ import {
   loginGoogle,
   loginGithub,
   emailDuplicate,
+  addPost,
 } from '../src/lib/index.js';
 
 jest.mock('firebase/auth', () => ({
@@ -168,4 +169,26 @@ describe('getUsers', () => {
     // Verifica se a função getUsers retornou a lista de usuários corretamente
     expect(result).toEqual([user1, user2]);
   });
+});
+
+jest.mock('firebase/firestore', () => ({
+  collection: jest.fn(),
+  addDoc: jest.fn(),
+}));
+
+test('Teste da função addPost', async () => {
+  // Configuração do mock para collection e addDoc
+  const mockCollection = jest.fn();
+  const mockAddDoc = jest.fn();
+  collection.mockReturnValue(mockCollection);
+  addDoc.mockReturnValue(mockAddDoc);
+
+  // Chama a função addPost
+  const db = {}; // Simulação do objeto db
+  const comments = {}; // Simulação dos comentários
+  await addPost(db, comments);
+
+  // Verifica se addDoc foi chamado corretamente
+  expect(collection).toHaveBeenCalledWith(db, 'comments');
+  expect(addDoc).toHaveBeenCalledWith(mockCollection, comments);
 });
