@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+/* MOBILE FIRST */
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +12,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(http://t1.gstatic.com/images?q=tbn:ANd9GcTuyuZHfMG2MZ2sY2LXBfQAhGkKBT7VEThGykERAyFb-TrHfy3R);
+  background-image: url('../img/bgPaws2.png');
+  background-size: cover;
   background-repeat: repeat;
   font-family: 'Roboto', sans-serif;
 }
@@ -32,19 +34,22 @@ body {
   position: relative;
   display: flex;
   justify-content: top;
-  width: 400px;
-  top: 100px;
-  left: 140px;
+  width: 220px;
+  top: 50px;
+  left: 25%;
 }
 
 .sobre-petChat {
   position: relative;
   text-align: justify;
+  font-size: 0.9rem;
   top: 120px;
   left: 130px;
   width: 80vw;
   max-width: 450px;
   height: auto;
+  text-align:center;
+  
 }
 
 .containerWelcome {
@@ -180,11 +185,11 @@ body {
     margin-top: 160%;
   }
 
-  .img-animals {
+  /*  .img-animals {
     width: 100%;
     left: 0;
     top: 50px;
-  }
+  }  */
 
   .sobre-petChat {
     top: 60px;
@@ -212,7 +217,7 @@ footer{
   color: #000000;
   text-align: center;
   padding-bottom: 10px;
-  margin-top: 10%;
+  margin-top: 50px;
 }
 
 .title-footer{
@@ -232,4 +237,91 @@ footer{
 
 .contato a{
   font-size: 14px;
+}
+/* =============MEDIA QUERIES =========== */
+
+@media screen and (min-width: 390px) and (max-width: 768px) {
+  .container-img-animals {
+    width: 100%;
+    height: auto;
+    right: 0;
+    margin-top: 100%;
+  }
+
+   .img-animals {
+    width: 50%;
+    left: 25%;
+    top: 50px;
+  } 
+
+  .sobre-petChat {
+    top: 60px;
+    left: 10%;
+    width: 80%;
+  }
+  
+
+  .containerWelcome {
+    width: 100%;
+    height: auto;
+    left: 0;
+    bottom: 0;
+    margin-top: 30%;
+  }
+
+  .logoPetWelcome {
+    margin-left: 28%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .container-img-animals {
+    width: 100%;
+    height: auto;
+    right: 0;
+    margin-top: 100%;
+  }
+
+   .img-animals {
+    width: 70%;
+    left: 15%;
+    top: 50px;
+  } 
+
+  .sobre-petChat {
+    top: 60px;
+    left: 10%;
+    width: 80%;
+    font-size: 1.2rem;
+  }
+
+  .containerWelcome {
+    width: 100%;
+    height: auto;
+    left: 0;
+    bottom: 0;
+    margin-top: 30%;
+  }
+
+  .logoPetWelcome {
+    margin-left: 28%;
+  }
+}
+@media screen and (min-width: 1023px){
+  .img-animals {
+    width: 49.5%;
+    left: 15%;
+    top: 50px;
+  } 
+  .sobre-petChat {   
+    font-size: 1.5rem;
+    top: 10%;
+  }
+  .containerWelcome {
+    top: -73.1%;
+   
+  }
+  .container-img-animals {
+   margin-top: 10%;
+  }
 }
