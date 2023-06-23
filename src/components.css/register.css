@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
+/* ==========MOBILE FIRST ========*/
 body {
   display: flex;
   justify-content: center;
@@ -27,7 +27,7 @@ body {
 }
 
 .containerRegister {
-  position: relative;
+  /* position: relative; */
   width: 400px;
   height: auto;
   background-color: #ffffff;
@@ -106,6 +106,7 @@ body {
 
 .btn-return:hover,
 .btn-reg:hover {
+  transform: scale(1);
   background-color: #4473c4da;
   color: rgb(255, 255, 255);
 } 
@@ -132,7 +133,7 @@ ul {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
   .containerRegister {
     padding: 20px;
     left: 0;

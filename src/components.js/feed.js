@@ -31,6 +31,7 @@ export const feed = () => {
         </div>
       </section>
     </div>
+    
   `;
   container.innerHTML = feedHTML;
 
