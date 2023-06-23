@@ -143,8 +143,6 @@ export async function likePost(commentId, like) {
     }
   }
 }
-<<<<<<< HEAD
-=======
 
 /* FUNÇÃO PARA BUSCAR OD DADOS DOS LIKES
 export async function getLikeData(postId) {
@@ -161,4 +159,3 @@ export async function getLikeData(postId) {
     likeCount,
   };
 } */
->>>>>>> eaa24aee3c3d98d6cf845325aafb71c3fdcb595b
