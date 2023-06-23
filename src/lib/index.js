@@ -1,13 +1,14 @@
 import {
   collection,
+  getDoc,
   getDocs,
   addDoc,
   deleteDoc,
   updateDoc,
   doc,
   getFirestore,
-  increment,
-  // FieldValue,
+  arrayUnion,
+  arrayRemove,
 } from 'firebase/firestore/lite';
 import {
   getAuth,
@@ -118,30 +119,27 @@ export async function updatePost(postId, updatedComment) {
 }
 
 // FUNÇÃO DE DAR O LIKE
-export async function likePost(postId) {
-  const db = getFirestore(app);
-  const docRef = doc(db, 'comments', postId);
-  await updateDoc(docRef, {
-    like: increment(1),
-  });
+export async function likePost(commentId, like) {
+  const db = getFirestore();
+  const commentRef = doc(db, 'comments', commentId);
+
+  const commentDoc = await getDoc(commentRef);
+  if (commentDoc.exists()) { // verifica se o comment existe no bando de dados
+    const commentData = commentDoc.data(); // comentários armazenados
+    const likeCount = commentData.likeCount || 0; // se tiver curtida atribui o valor, se não será 0
+    const userLiked = commentData.like && commentData.like.includes(auth.currentUser.uid);
+    // verifica que o usuário não curtiu, mas poderá curtir
+    if (like && !userLiked) {
+      await updateDoc(commentRef, {
+        like: arrayUnion(auth.currentUser.uid),
+        likeCount: likeCount + 1,
+      });
+    // verifica que o usuário curtiu e não poderá mais curtir, somente descurtir
+    } else if (!like && userLiked) {
+      await updateDoc(commentRef, {
+        like: arrayRemove(auth.currentUser.uid),
+        likeCount: likeCount - 1,
+      });
+    }
+  }
 }
-
-
-
-
-
-/* FUNÇÃO PARA BUSCAR OD DADOS DOS LIKES
-export async function getLikeData(postId) {
-  const db = getFirestore(app);
-  const docRef = doc(db, 'comments', postId);
-  const docSnapshot = await getDocs(docRef);
-  const commentData = docSnapshot.data();
-
-  const userLiked = commentData.like && commentData.like[auth.currentUser.uid] === 1;
-  const likeCount = commentData.likeCount || 0;
-
-  return {
-    userLiked,
-    likeCount,
-  };
-} */

@@ -7,7 +7,7 @@ import {
   deletePost,
   updatePost,
   likePost,
-  // getLikeData,
+
 } from '../lib/index.js';
 
 export const feed = () => {
@@ -56,7 +56,7 @@ export const feed = () => {
   // ADICIONA O NOME DO USUÁRIO
   userAuthChanged((user) => {
     if (user) {
-      usernameElement.textContent = `Bem-vindo(a), ${user.displayName}`;
+      usernameElement.textContent = `Boas vindas, ${user.displayName}🐶`;
     }
   });
 
@@ -68,29 +68,30 @@ export const feed = () => {
       const comments = await getPosts(db);
 
       // Ordenar os comentários por data
-      comments.sort((a, b) => new Date(a.data) - new Date(b.data));
+      // comments.sort((a, b) => new Date(a.data) - new Date(b.data));
 
       comments.forEach((post) => {
         const postContainer = document.createElement('div');
         postContainer.innerHTML = `
-        <div class="posts">
-          <div class="barra">
-            <p class="usuario">${post.Usuario}</p>
-            <p class="data">${post.data}</p>
+          <div class="posts">
+            <div class="barra">
+              <p class="usuario">${post.Usuario}</p>
+              <p class="data">${post.data}</p>
+            </div>
+            <p class="comentario">${post.Comentario}</p>
+            <a class="btn-like${post.like && post.like.includes(auth.currentUser.uid) ? ' liked' : ''}" data-comment-id="${post.id}">❤️</a>
+            <span class="likeCount">${post.likeCount}</span>
+            ${post.Usuario === auth.currentUser.displayName ? `
+              <a class="btn-edit">✏️</a>
+              <a class="btn-delete">🗑️</a>
+            ` : ''}
           </div>
-          <p class="comentario">${post.Comentario}</p>
-          <a class="btn-like" data-comment-id="${post.id}">❤️</button>
-          <span class="countLikes">0</span>
-          ${post.Usuario === auth.currentUser.displayName ? `
-          <a class="btn-edit">🖊️</button>
-          <a class="btn-delete">🗑️</button>
-          ` : ''}
-        </div>
-      `;
+        `;
 
         const editButton = postContainer.querySelector('.btn-edit');
         const deleteButton = postContainer.querySelector('.btn-delete');
         const likeButton = postContainer.querySelector('.btn-like');
+        const likeCountElement = postContainer.querySelector('.likeCount');
 
         // BOTÃO DE EDITAR O COMENTÁRIO
         if (editButton) {
@@ -130,18 +131,19 @@ export const feed = () => {
         }
         // FUNÇÃO DE DAR O LIKE
         likeButton.addEventListener('click', async () => {
-          const commentId = likeButton.getAttribute('data-comment-id');
-          const countLikes = postContainer.querySelector('.countLikes');
-          const likeCurrent = Number(countLikes.textContent);
+          const commentId = likeButton.dataset.commentId;
+          const userLiked = likeButton.classList.contains('liked');
 
-          if (likeButton.classList.contains('liked')) {
-            await likePost(commentId, false);
-            countLikes.textContent = likeCurrent - 1;
+          await likePost(commentId, !userLiked);
+
+          if (userLiked) {
             likeButton.classList.remove('liked');
+            likeButton.textContent = '❤️';
+            likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) - 1;
           } else {
-            await likePost(commentId, true);
-            countLikes.textContent = likeCurrent + 1;
             likeButton.classList.add('liked');
+            likeButton.textContent = '😻';
+            likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) + 1;
           }
         });
 
@@ -173,6 +175,7 @@ export const feed = () => {
       Usuario: auth.currentUser.displayName,
       Comentario: commentText,
       data: commentData,
+      likeCount: 0,
     };
 
     // adiciona o comentário ao banco de dados
