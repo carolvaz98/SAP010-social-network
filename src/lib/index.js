@@ -143,3 +143,22 @@ export async function likePost(commentId, like) {
     }
   }
 }
+<<<<<<< HEAD
+=======
+
+/* FUNÇÃO PARA BUSCAR OD DADOS DOS LIKES
+export async function getLikeData(postId) {
+  const db = getFirestore(app);
+  const docRef = doc(db, 'comments', postId);
+  const docSnapshot = await getDocs(docRef);
+  const commentData = docSnapshot.data();
+
+  const userLiked = commentData.like && commentData.like[auth.currentUser.uid] === 1;
+  const likeCount = commentData.likeCount || 0;
+
+  return {
+    userLiked,
+    likeCount,
+  };
+} */
+>>>>>>> eaa24aee3c3d98d6cf845325aafb71c3fdcb595b
