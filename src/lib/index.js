@@ -14,7 +14,6 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
@@ -54,42 +53,48 @@ export const emailDuplicate = async (email) => {
 };
 
 // LOGAR COM CONTA GOOGLE
-export const loginGoogle = () => {
-  const authInstance = getAuth();
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(authInstance, provider);
+export const loginGoogle = async () => {
+  try {
+    const authInstance = getAuth();
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(authInstance, provider);
+  } catch (error) {
+    throw new Error('Ocorreu um erro ao realizar o logon Google, tente novamente.');
+  }
 };
 
-// LOGAR COM CONTA GITHUB
-export const loginGithub = () => {
-  const authInstance = getAuth();
-  const provider = new GithubAuthProvider();
-  return signInWithPopup(authInstance, provider);
-};
-
-// FUNÇÃO PARA USUÁRIO SAIR DO SITE (??? try/catch)
-export function userStateLogout() {
-  const authLogOut = getAuth();
-  signOut(authLogOut);
+// FUNÇÃO PARA USUÁRIO SAIR DO SITE
+export async function userStateLogout() {
+  try {
+    const authLogOut = getAuth();
+    await signOut(authLogOut);
+    console.log('Usuário deslogado com sucesso.');
+  } catch (error) {
+    throw new Error('Ocorreu um erro ao deslogar o usuário');
+  }
 }
 
 // MANTER USUÁRIO LOGADO (https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br)
 
-export function userAuthChanged(callback) {
+export async function userAuthChanged(callback) {
   try {
     const authLogin = getAuth(app);
     onAuthStateChanged(authLogin, callback);
   } catch (error) {
-    // eslint-disable-next-line
-    console.log('Erro ao verificar o estado de autenticação:', err);
+    console.log('Erro ao verificar o estado de autenticação.');
   }
 }
 
 // FUNÇÃO PARA ADICIONAR COMENTARIO NO BANCO DE DADOS
 // comments é como está salvo no firabase, onde será adicionado os comentarios
 export async function addPost(db, comments) {
-  const commentsColl = collection(db, 'comments');
-  await addDoc(commentsColl, comments);
+  try {
+    const commentsColl = collection(db, 'comments');
+    await addDoc(commentsColl, comments);
+    console.log('Comentário adicionado com sucesso.');
+  } catch (error) {
+    throw new Error('Ocorreu um erro ao adicionar o comentário');
+  }
 }
 
 // RECUPERA TODOS OS COMENTÁRIOS DO DB, MAPEIA E TRAZ TODOS EM LISTA PARA O SITE
@@ -134,7 +139,7 @@ export async function likePost(commentId, like) {
         like: arrayUnion(auth.currentUser.uid),
         likeCount: likeCount + 1,
       });
-    // verifica que o usuário curtiu e não poderá mais curtir, somente descurtir
+      // verifica que o usuário curtiu e não poderá mais curtir, somente descurtir
     } else if (!like && userLiked) {
       await updateDoc(commentRef, {
         like: arrayRemove(auth.currentUser.uid),

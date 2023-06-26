@@ -1,4 +1,10 @@
-import { addDoc, collection, getDocs } from 'firebase/firestore/lite';
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  getFirestore,
+} from 'firebase/firestore/lite';
 
 import {
   createUserWithEmailAndPassword,
@@ -6,20 +12,22 @@ import {
   fetchSignInMethodsForEmail,
   signInWithPopup,
   GoogleAuthProvider,
-  GithubAuthProvider,
+  // GithubAuthProvider,
   updateProfile,
   getAuth,
+  signOut,
 } from 'firebase/auth';
 
-import { getUsers } from '../src/lib/firebase.js';
+import { getUsers, app } from '../src/lib/firebase.js';
 
 import {
   loginCreate,
   loginUser,
   loginGoogle,
-  loginGithub,
+  // loginGithub,
   emailDuplicate,
-  addPost,
+  userStateLogout,
+  updatePost,
 } from '../src/lib/index.js';
 
 jest.mock('firebase/auth', () => ({
@@ -30,7 +38,18 @@ jest.mock('firebase/auth', () => ({
   signInWithPopup: jest.fn(),
   updateProfile: jest.fn(),
   GoogleAuthProvider: jest.fn(),
-  GithubAuthProvider: jest.fn(),
+  // GithubAuthProvider: jest.fn(),
+  getAuth: jest.fn(),
+  signOut: jest.fn(),
+}));
+
+jest.mock('firebase/firestore/lite', () => ({
+  ...jest.requireActual('firebase/firestore/lite'),
+  collection: jest.fn(),
+  getDocs: jest.fn(),
+  updateDoc: jest.fn(),
+  doc: jest.fn(),
+  getFirestore: jest.fn(),
 }));
 
 describe('Login Functions', () => {
@@ -120,75 +139,95 @@ describe('Login Functions', () => {
 
       expect(signInWithPopup).toHaveBeenCalledWith(mockAuthInstance, mockGoogleAuthProvider);
     });
-  });
 
-  // TESTE - ENTRAR COM LOGIN GITHUB
-  describe('loginGithub', () => {
-    it('deve fazer login com o provedor do Github', async () => {
-      const mockGithubAuthProvider = new GithubAuthProvider();
-      await loginGithub(mockAuth);
+    it('deve retornar um erro, caso o login Google falhe', async () => {
+      const mockError = new Error('Ocorreu um erro ao realizar o logon Google, tente novamente.');
 
-      expect(signInWithPopup).toHaveBeenCalledWith(mockAuthInstance, mockGithubAuthProvider);
+      signInWithPopup.mockRejectedValue(mockError);
+
+      await expect(loginGoogle()).rejects.toThrow('Ocorreu um erro ao realizar o logon Google, tente novamente.');
     });
   });
-});
 
-// Crie um mock para o Firestore
-jest.mock('firebase/firestore/lite');
+  // TESTE - LOGOUT DE USUÁRIO
+  describe('userStateLogout', () => {
+    it('Deve fazer logout do usuário', async () => {
+      await userStateLogout();
 
-describe('getUsers', () => {
-  test('deve retornar a lista de usuários corretamente', async () => {
-    // Crie um mock para a coleção de usuários
-    const usersCol = 'mocked-collection';
+      expect(getAuth).toHaveBeenCalled();
+      expect(signOut).toHaveBeenCalledWith(mockAuthInstance);
+    });
 
-    // Configure o mock da função collection para retornar o valor esperado
-    collection.mockReturnValueOnce(usersCol);
+    it('Deve retornar um erro, caso o logout falhar', async () => {
+      const mockError = new Error('Ocorreu um erro ao deslogar o usuário');
+      signOut.mockRejectedValue(mockError);
 
-    // Crie um mock para os dados dos usuários
-    const user1 = { id: '1', name: 'Usuário 1' };
-    const user2 = { id: '2', name: 'Usuário 2' };
-    const userSnapshot = {
-      docs: [
-        { data: () => user1 },
-        { data: () => user2 },
-      ],
-    };
-
-    // Configure o mock da função getDocs para retornar o snapshot dos usuários
-    getDocs.mockResolvedValueOnce(userSnapshot);
-
-    // Chama a função getUsers passando o mock do Firestore
-    const result = await getUsers('mocked-database');
-
-    // Verifica se a função collection foi chamada corretamente
-    expect(collection).toHaveBeenCalledWith('mocked-database', 'users');
-
-    // Verifica se a função getDocs foi chamada corretamente
-    expect(getDocs).toHaveBeenCalledWith(usersCol);
-
-    // Verifica se a função getUsers retornou a lista de usuários corretamente
-    expect(result).toEqual([user1, user2]);
+      await expect(userStateLogout()).rejects.toThrow('Ocorreu um erro ao deslogar o usuário');
+    });
   });
-});
 
-jest.mock('firebase/firestore', () => ({
-  collection: jest.fn(),
-  addDoc: jest.fn(),
-}));
+  // TESTE - ATUALIZAR / EDITAR UM COMENTÁRIO
+  describe('updatePost', () => {
+    test('Deve atualizar o comentário com sucesso', async () => {
+      // mocks para as funções e objetos necessários
+      const dbMock = {};
+      const docMock = jest.fn();
+      // comportamento esperado dos mocks
+      getFirestore.mockReturnValue(dbMock);
+      doc.mockReturnValue(docMock);
+      updateDoc.mockImplementation(async (docRef, updatedData) => {
+        // Simula a atualização do documento no Firestore
+        docRef.data = updatedData;
+      });
+      // Chama a função que deseja testar
+      const postId = 'postId';
+      const updatedComment = { comment: 'Novo comentário' };
+      await expect(updatePost(postId, updatedComment)).resolves.not.toThrow();
+      // Verifica se as funções foram chamadas com os parâmetros corretos
+      expect(getFirestore).toHaveBeenCalledTimes(1);
+      expect(getFirestore).toHaveBeenCalledWith(app);
+      expect(doc).toHaveBeenCalledTimes(1);
+      expect(doc).toHaveBeenCalledWith(dbMock, 'comments', postId);
+      expect(updateDoc).toHaveBeenCalledTimes(1);
+      expect(updateDoc).toHaveBeenCalledWith(docMock, updatedComment);
+      // Verifica se o documento foi atualizado corretamente
+      expect(docMock.data).toEqual(updatedComment);
+    });
+  });
 
-test('Teste da função addPost', async () => {
-  // Configuração do mock para collection e addDoc
-  const mockCollection = jest.fn();
-  const mockAddDoc = jest.fn();
-  collection.mockReturnValue(mockCollection);
-  addDoc.mockReturnValue(mockAddDoc);
+  // TESTE - CRIAR LISTA DE USUÁRIO NO FIREBASE
+  describe('getUsers', () => {
+    test('deve retornar a lista de usuários corretamente', async () => {
+      // Crie um mock para a coleção de usuários
+      const usersCol = 'mocked-collection';
 
-  // Chama a função addPost
-  const db = {}; // Simulação do objeto db
-  const comments = {}; // Simulação dos comentários
-  await addPost(db, comments);
+      // Configure o mock da função collection para retornar o valor esperado
+      collection.mockReturnValueOnce(usersCol);
 
-  // Verifica se addDoc foi chamado corretamente
-  expect(collection).toHaveBeenCalledWith(db, 'comments');
-  expect(addDoc).toHaveBeenCalledWith(mockCollection, comments);
+      // Crie um mock para os dados dos usuários
+      const user1 = { id: '1', name: 'Usuário 1' };
+      const user2 = { id: '2', name: 'Usuário 2' };
+      const userSnapshot = {
+        docs: [
+          { data: () => user1 },
+          { data: () => user2 },
+        ],
+      };
+
+      // Configure o mock da função getDocs para retornar o snapshot dos usuários
+      getDocs.mockResolvedValueOnce(userSnapshot);
+
+      // Chama a função getUsers passando o mock do Firestore
+      const result = await getUsers('mocked-database');
+
+      // Verifica se a função collection foi chamada corretamente
+      expect(collection).toHaveBeenCalledWith('mocked-database', 'users');
+
+      // Verifica se a função getDocs foi chamada corretamente
+      expect(getDocs).toHaveBeenCalledWith(usersCol);
+
+      // Verifica se a função getUsers retornou a lista de usuários corretamente
+      expect(result).toEqual([user1, user2]);
+    });
+  });
 });

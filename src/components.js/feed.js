@@ -7,7 +7,6 @@ import {
   deletePost,
   updatePost,
   likePost,
-
 } from '../lib/index.js';
 
 export const feed = () => {

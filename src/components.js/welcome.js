@@ -1,4 +1,4 @@
-import { loginUser, loginGoogle, loginGithub } from '../lib/index.js';
+import { loginUser, loginGoogle } from '../lib/index.js';
 
 export const welcome = () => {
   const container = document.createElement('div');
@@ -88,7 +88,7 @@ export const welcome = () => {
   const btnSignIn = container.querySelector('.btnSignIn');
   const btnRegister = container.querySelector('.btnRegister');
   const btnGoogle = container.querySelector('.btnGoogle');
-  const btnGitHub = container.querySelector('.btnGitHub');
+  // const btnGitHub = container.querySelector('.btnGitHub');
 
   btnSignIn.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -126,7 +126,7 @@ export const welcome = () => {
     }
   });
 
-  btnGitHub.addEventListener('click', async (event) => {
+  /* btnGitHub.addEventListener('click', async (event) => {
     event.preventDefault();
     try {
       await loginGithub();
@@ -136,7 +136,7 @@ export const welcome = () => {
       errorItem.textContent = error.message;
       errorGoogleGithub.appendChild(errorItem);
     }
-  });
+  }); */
 
   return container;
 };
