@@ -4,6 +4,10 @@ import {
   updateDoc,
   doc,
   getFirestore,
+  getDoc,
+  arrayUnion,
+  arrayRemove,
+  deleteDoc,
 } from 'firebase/firestore/lite';
 
 import {
@@ -12,7 +16,6 @@ import {
   fetchSignInMethodsForEmail,
   signInWithPopup,
   GoogleAuthProvider,
-  // GithubAuthProvider,
   updateProfile,
   getAuth,
   signOut,
@@ -24,10 +27,11 @@ import {
   loginCreate,
   loginUser,
   loginGoogle,
-  // loginGithub,
   emailDuplicate,
   userStateLogout,
   updatePost,
+  likePost,
+  deletePost,
 } from '../src/lib/index.js';
 
 jest.mock('firebase/auth', () => ({
@@ -38,7 +42,6 @@ jest.mock('firebase/auth', () => ({
   signInWithPopup: jest.fn(),
   updateProfile: jest.fn(),
   GoogleAuthProvider: jest.fn(),
-  // GithubAuthProvider: jest.fn(),
   getAuth: jest.fn(),
   signOut: jest.fn(),
 }));
@@ -50,6 +53,9 @@ jest.mock('firebase/firestore/lite', () => ({
   updateDoc: jest.fn(),
   doc: jest.fn(),
   getFirestore: jest.fn(),
+  getDoc: jest.fn(),
+  arrayUnion: jest.fn(),
+  arrayRemove: jest.fn(),
 }));
 
 describe('Login Functions', () => {
@@ -145,12 +151,15 @@ describe('Login Functions', () => {
 
       signInWithPopup.mockRejectedValue(mockError);
 
-      await expect(loginGoogle()).rejects.toThrow('Ocorreu um erro ao realizar o logon Google, tente novamente.');
+      await expect(loginGoogle(mockAuth)).rejects.toThrow('Ocorreu um erro ao realizar o logon Google, tente novamente.');
     });
   });
 
   // TESTE - LOGOUT DE USUÁRIO
   describe('userStateLogout', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
     it('Deve fazer logout do usuário', async () => {
       await userStateLogout();
 
@@ -195,6 +204,28 @@ describe('Login Functions', () => {
     });
   });
 
+  // TESTE - DELETAR UM COMENTÁRIO
+  describe('deletePost', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    test('Deve deletar o comentário com sucesso', async () => {
+      const postId = 'postId';
+
+      const dbMock = getFirestore();
+      const commentRefMock = doc(dbMock, 'comments', postId);
+
+      await deletePost(postId);
+
+      expect(getFirestore).toHaveBeenCalled();
+      expect(dbMock.collection).toHaveBeenCalledWith('comments');
+      expect(commentRefMock.doc).toHaveBeenCalledWith(postId);
+      expect(deleteDoc).toHaveBeenCalledWith(commentRefMock);
+    
+    });
+  });
+
   // TESTE - CRIAR LISTA DE USUÁRIO NO FIREBASE
   describe('getUsers', () => {
     test('deve retornar a lista de usuários corretamente', async () => {
@@ -229,5 +260,89 @@ describe('Login Functions', () => {
       // Verifica se a função getUsers retornou a lista de usuários corretamente
       expect(result).toEqual([user1, user2]);
     });
+  });
+});
+
+// FUNÇÃO - DAR LIKE, DESLIKE E VERIFICAR SE EXISTE COMENTÁRIO VAZIO
+jest.mock('firebase/firestore/lite');
+
+describe('likePost', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('deve adicionar um like ao comentário', async () => {
+    const commentId = 'comment123';
+    const authUid = 'user123';
+
+    const dbMock = getFirestore();
+    const commentRefMock = doc(dbMock, 'comments', commentId);
+    const commentDocMock = {
+      exists: true,
+      data: jest.fn().mockReturnValue({
+        likeCount: 5,
+        like: ['user1', 'user2'] || [],
+      }),
+    };
+
+    getDoc.mockResolvedValue(commentDocMock);
+    getAuth.mockReturnValue({ currentUser: { uid: authUid } });
+
+    await likePost(commentId, true);
+
+    expect(getFirestore).toHaveBeenCalled();
+    expect(doc).toHaveBeenCalledWith(dbMock, 'comments', commentId);
+    expect(getDoc).toHaveBeenCalledWith(commentRefMock);
+    expect(updateDoc).toHaveBeenCalledWith(commentRefMock, {
+      like: arrayUnion(authUid),
+      likeCount: 6,
+    });
+  });
+
+  test('deve remover um like do comentário', async () => {
+    const commentId = 'comment123';
+    const authUid = 'user123';
+
+    const dbMock = getFirestore();
+    const commentRefMock = doc(dbMock, 'comments', commentId);
+    const commentDocMock = {
+      exists: true,
+      data: jest.fn().mockReturnValue({
+        likeCount: 3,
+        like: ['user1', 'user2', authUid],
+      }),
+    };
+
+    getDoc.mockResolvedValue(commentDocMock);
+    getAuth.mockReturnValue({ currentUser: { uid: authUid } });
+
+    await likePost(commentId, false);
+
+    expect(getFirestore).toHaveBeenCalled();
+    expect(doc).toHaveBeenCalledWith(dbMock, 'comments', commentId);
+    expect(getDoc).toHaveBeenCalledWith(commentRefMock);
+    expect(updateDoc).toHaveBeenCalledWith(commentRefMock, {
+      like: arrayRemove(authUid),
+      likeCount: 2,
+    });
+  });
+
+  test('não deve fazer nenhuma alteração se o comentário não existir', async () => {
+    const commentId = 'comment123';
+
+    const dbMock = getFirestore();
+    const commentRefMock = doc(dbMock, 'comments', commentId);
+    const commentDocMock = {
+      exists: false,
+    };
+
+    getDoc.mockResolvedValue(commentDocMock);
+
+    await likePost(commentId, true);
+
+    expect(getFirestore).toHaveBeenCalled();
+    expect(doc).toHaveBeenCalledWith(dbMock, 'comments', commentId);
+    expect(getDoc).toHaveBeenCalledWith(commentRefMock);
+    expect(updateDoc).not.toHaveBeenCalled();
   });
 });

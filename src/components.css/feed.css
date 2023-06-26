@@ -124,6 +124,7 @@ nav {
 .comentario{
   width: 500px;
   height: 130px;
+  overflow-y: auto;
   border: 1px solid #00000093;
   background-color: rgba(224, 224, 224, 0.14);
   margin-top: 10px;

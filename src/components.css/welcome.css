@@ -106,9 +106,8 @@ body {
 }
 
 .btnSignIn,
-.btnGoogle,
-.btnGitHub {
-  background: linear-gradient(to right, #8bbff2, #78a0f1);
+.btnGoogle {
+  background: #ffffff;
   color: #060606;
   width: 100%;
   margin-top: 17px;
@@ -119,14 +118,13 @@ body {
   font-weight: bolder;
 }
 
-.btnGitHub,
 .btnGoogle {
-  width: 43%;
+  width: 60%;
   height: 40px;
   font-size: 15px;
   margin-bottom: 20px;
   margin-right: 1px;
-  margin-left: 12px;
+  margin-left: 65px;
   margin-top: 3px;
 }
 
@@ -143,10 +141,9 @@ body {
   color: #ED7D31;
 }
 
-.btnGoogle:hover,
-.btnGitHub:hover {
-  background-color: #4473c48e;
-  color: #fbfbfb;
+.btnGoogle:hover {
+  background-color: #a7caee;
+  color: #000000;
 }
 
 .active {
@@ -160,12 +157,6 @@ body {
 }
 
 .img-google {
-  width: 25px;
-  vertical-align: middle;
-  margin-right: 2px;
-}
-
-.img-github {
   width: 25px;
   vertical-align: middle;
   margin-right: 2px;

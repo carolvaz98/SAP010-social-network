@@ -39,16 +39,11 @@ export const welcome = () => {
 
                 <button class="btnGoogle">
                   <img class="img-google" src="img/google_logo.png" />
-                  Google
+                 Entre com Google
                 </button>
 
-                <button class="btnGitHub">
-                  <img class="img-github" src="img/github.logo.png" />
-                  GitHub
-                </button>
-
-                <div id="error-Google-Github">
-                <ul class="error-Google-Github"></ul>
+                <div id="error-Google">
+                <ul class="error-Google"></ul>
                 </div>
 
               <p><a class="btnRegister"><i class="material-icons petIcon">pets</i> Criar uma conta </a></p>
@@ -82,13 +77,12 @@ export const welcome = () => {
   container.innerHTML = signInHTML;
 
   const errorEmailPassword = container.querySelector('.error-email-password');
-  const errorGoogleGithub = container.querySelector('.error-Google-Github');
+  const errorGoogle = container.querySelector('.error-Google');
   const inputEmail = container.querySelector('.inputSignIn[type="email"]');
   const inputPass = container.querySelector('.inputSignIn[type="password"]');
   const btnSignIn = container.querySelector('.btnSignIn');
   const btnRegister = container.querySelector('.btnRegister');
   const btnGoogle = container.querySelector('.btnGoogle');
-  // const btnGitHub = container.querySelector('.btnGitHub');
 
   btnSignIn.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -97,7 +91,7 @@ export const welcome = () => {
     const password = inputPass.value;
 
     errorEmailPassword.innerHTML = '';
-    errorGoogleGithub.innerHTML = '';
+    errorGoogle.innerHTML = '';
 
     try {
       await loginUser(email, password);
@@ -122,21 +116,9 @@ export const welcome = () => {
     } catch (error) {
       const errorItem = document.createElement('li');
       errorItem.textContent = error.message;
-      errorGoogleGithub.appendChild(errorItem);
+      errorGoogle.appendChild(errorItem);
     }
   });
-
-  /* btnGitHub.addEventListener('click', async (event) => {
-    event.preventDefault();
-    try {
-      await loginGithub();
-      window.location.hash = '#feed';
-    } catch (error) {
-      const errorItem = document.createElement('li');
-      errorItem.textContent = error.message;
-      errorGoogleGithub.appendChild(errorItem);
-    }
-  }); */
 
   return container;
 };
