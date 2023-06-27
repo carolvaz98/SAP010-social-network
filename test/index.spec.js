@@ -169,22 +169,25 @@ describe('Login Functions', () => {
 
   // TESTE - DELETAR UM COMENTÁRIO
   describe('deletePost', () => {
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
-
-    test('Deve deletar o comentário com sucesso', async () => {
-      const postId = 'postId';
-
-      const dbMock = getFirestore();
-      const commentRefMock = doc(dbMock, 'comments', postId);
-
+    test('deve excluir um post', async () => {
+      const postId = 'abc123';
+      // Chame a função deletePost e aguarde sua conclusão
       await deletePost(postId);
+      // verificar se a função deleteDoc foi chamada com os argumentos corretos
+      expect(deleteDoc).toHaveBeenCalledWith(doc(getFirestore(app), 'comments', postId));
+    });
+    test('deve imprimir uma mensagem de sucesso', async () => {
+      const postId = 'abc123';
+      const consoleLogMock = jest.spyOn(console, 'log'); // Cria um mock para a função console.log
 
-      expect(getFirestore).toHaveBeenCalled();
-      expect(dbMock.collection).toHaveBeenCalledWith('comments');
-      expect(commentRefMock.doc).toHaveBeenCalledWith(postId);
-      expect(deleteDoc).toHaveBeenCalledWith(commentRefMock);
+      // Retorne uma Promise do teste
+      return deletePost(postId).then(() => {
+        // Verifique se a mensagem de sucesso foi impressa
+        expect(consoleLogMock).toHaveBeenCalledWith('Comentário excluído com sucesso!');
+
+        // Restaure a função original do console.log
+        consoleLogMock.mockRestore();
+      });
     });
   });
 
