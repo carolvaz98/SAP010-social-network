@@ -25,76 +25,48 @@ import {
 import { auth, app } from './firebase.js';
 
 // CRIAR USUÁRIO
-export const loginCreate = async (email, password, name) => {
-  try {
-    const { user } = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(user, { displayName: name });
-  } catch (error) {
-    throw new Error('Ocorreu um erro ao criar o usuário, tente novamente.');
-  }
-};
+export async function loginCreate(email, password, name) {
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  await updateProfile(user, { displayName: name });
+}
 
 // LOGAR COM USUÁRIO EXISTENTE
-export const loginUser = async (email, password) => {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (error) {
-    throw new Error('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
-  }
-};
+export async function loginUser(email, password) {
+  await signInWithEmailAndPassword(auth, email, password);
+}
 
-export const emailDuplicate = async (email) => {
-  try {
-    const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-    return signInMethods.length > 0;
-  } catch (error) {
-    throw new Error('Ocorreu um erro ao verificar o e-mail cadastrado.');
-  }
-};
+export async function emailDuplicate(email) {
+  const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+  return signInMethods.length > 0;
+}
 
 // LOGAR COM CONTA GOOGLE
 export async function loginGoogle() {
-  try {
-    const authInstance = getAuth();
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(authInstance, provider);
-  } catch (error) {
-    throw new Error('Ocorreu um erro ao realizar o logon Google, tente novamente.');
-  }
+  const authInstance = getAuth();
+  const provider = new GoogleAuthProvider();
+  return signInWithPopup(authInstance, provider);
 }
 
 // FUNÇÃO PARA USUÁRIO SAIR DO SITE
 export async function userStateLogout() {
-  try {
-    const authLogOut = getAuth();
-    await signOut(authLogOut);
-    console.log('Usuário deslogado com sucesso.');
-  } catch (error) {
-    throw new Error('Ocorreu um erro ao deslogar o usuário');
-  }
+  const authLogOut = getAuth();
+  await signOut(authLogOut);
+  console.log('Usuário deslogado com sucesso.');
 }
 
 // MANTER USUÁRIO LOGADO (https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br)
 
 export async function userAuthChanged(callback) {
-  try {
-    const authLogin = getAuth(app);
-    onAuthStateChanged(authLogin, callback);
-  } catch (error) {
-    console.log('Erro ao verificar o estado de autenticação.');
-  }
+  const authLogin = getAuth(app);
+  onAuthStateChanged(authLogin, callback);
 }
 
 // FUNÇÃO PARA ADICIONAR COMENTARIO NO BANCO DE DADOS
-// comments é como está salvo no firabase, onde será adicionado os comentarios
 export async function addPost(db, comments) {
-  try {
-    const commentsColl = collection(db, 'comments');
-    await addDoc(commentsColl, comments);
-    console.log('Comentário adicionado com sucesso.');
-  } catch (error) {
-    throw new Error('Ocorreu um erro ao adicionar o comentário');
-  }
+  const commentsColl = collection(db, 'comments');
+  await addDoc(commentsColl, comments);
+  // eslint-disable-next-line no-console
+  console.log('Comentário adicionado com sucesso.');
 }
 
 // RECUPERA TODOS OS COMENTÁRIOS DO DB, MAPEIA E TRAZ TODOS EM LISTA PARA O SITE
@@ -113,6 +85,7 @@ export async function getPosts(db) {
 export async function deletePost(postId) {
   const db = getFirestore(app);
   await deleteDoc(doc(db, 'comments', postId));
+  // eslint-disable-next-line no-console
   console.log('Comentário excluído com sucesso!');
 }
 
@@ -120,11 +93,12 @@ export async function deletePost(postId) {
 export async function updatePost(postId, updatedComment) {
   const db = getFirestore(app);
   await updateDoc(doc(db, 'comments', postId), updatedComment);
+  // eslint-disable-next-line no-console
   console.log('Comentário atualizado com sucesso!');
 }
 
 // FUNÇÃO DE DAR O LIKE
-export const likePost = async (commentId, like) => {
+export async function likePost(commentId, like) {
   const db = getFirestore();
   const commentRef = doc(db, 'comments', commentId);
   const commentDoc = await getDoc(commentRef);
@@ -149,4 +123,4 @@ export const likePost = async (commentId, like) => {
       });
     }
   }
-};
+}

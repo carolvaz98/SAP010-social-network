@@ -56,6 +56,7 @@ jest.mock('firebase/firestore/lite', () => ({
   getDoc: jest.fn(),
   arrayUnion: jest.fn(),
   arrayRemove: jest.fn(),
+  deleteDoc: jest.fn(),
 }));
 
 describe('Login Functions', () => {
@@ -85,13 +86,6 @@ describe('Login Functions', () => {
       );
       expect(updateProfile).toHaveBeenCalledWith(mockUser, { displayName: name });
     });
-
-    it('deve gerar um erro quando a criação do usuário falhar', async () => {
-      const mockError = new Error('Ocorreu um erro ao criar o usuário, tente novamente.');
-      createUserWithEmailAndPassword.mockRejectedValue(mockError);
-
-      await expect(loginCreate('', '', '')).rejects.toThrow('Ocorreu um erro ao criar o usuário, tente novamente.');
-    });
   });
 
   // TESTE - ENTRAR COM USUÁRIO EXISTENTE
@@ -103,13 +97,6 @@ describe('Login Functions', () => {
       await loginUser(email, password, mockAuth);
 
       expect(signInWithEmailAndPassword).toHaveBeenCalledWith(mockAuthInstance, email, password);
-    });
-
-    it('deve gerar um erro quando o login falha', async () => {
-      const mockError = new Error('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
-      signInWithEmailAndPassword.mockRejectedValue(mockError);
-
-      await expect(loginUser('', '')).rejects.toThrow('Ocorreu um erro. E-mail ou senha não correspondem com o cadastro, tente novamente.');
     });
   });
 
@@ -126,15 +113,6 @@ describe('Login Functions', () => {
       expect(fetchSignInMethodsForEmail).toHaveBeenCalledWith(mockAuthInstance, email);
       expect(result).toBe(true);
     });
-
-    it('deve gerar um erro quando ocorrer um erro ao verificar o e-mail cadastrado', async () => {
-      const email = 'test@example.com';
-      const mockError = new Error('Ocorreu um erro ao verificar o e-mail cadastrado.');
-
-      fetchSignInMethodsForEmail.mockRejectedValue(mockError);
-
-      await expect(emailDuplicate(email)).rejects.toThrow('Ocorreu um erro ao verificar o e-mail cadastrado.');
-    });
   });
 
   // TESTE - ENTRAR COM LOGIN GOOGLE
@@ -144,14 +122,6 @@ describe('Login Functions', () => {
       await loginGoogle(mockAuth);
 
       expect(signInWithPopup).toHaveBeenCalledWith(mockAuthInstance, mockGoogleAuthProvider);
-    });
-
-    it('deve retornar um erro, caso o login Google falhe', async () => {
-      const mockError = new Error('Ocorreu um erro ao realizar o logon Google, tente novamente.');
-
-      signInWithPopup.mockRejectedValue(mockError);
-
-      await expect(loginGoogle(mockAuth)).rejects.toThrow('Ocorreu um erro ao realizar o logon Google, tente novamente.');
     });
   });
 
@@ -165,13 +135,6 @@ describe('Login Functions', () => {
 
       expect(getAuth).toHaveBeenCalled();
       expect(signOut).toHaveBeenCalledWith(mockAuthInstance);
-    });
-
-    it('Deve retornar um erro, caso o logout falhar', async () => {
-      const mockError = new Error('Ocorreu um erro ao deslogar o usuário');
-      signOut.mockRejectedValue(mockError);
-
-      await expect(userStateLogout()).rejects.toThrow('Ocorreu um erro ao deslogar o usuário');
     });
   });
 
@@ -222,7 +185,6 @@ describe('Login Functions', () => {
       expect(dbMock.collection).toHaveBeenCalledWith('comments');
       expect(commentRefMock.doc).toHaveBeenCalledWith(postId);
       expect(deleteDoc).toHaveBeenCalledWith(commentRefMock);
-    
     });
   });
 

@@ -98,7 +98,7 @@ export const welcome = () => {
       window.location.hash = '#feed';
     } catch (error) {
       const errorItem = document.createElement('li');
-      errorItem.textContent = error.message;
+      errorItem.textContent = 'Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente. Se ainda não possui uma conta, registre-se para continuar.';
       errorEmailPassword.appendChild(errorItem);
     }
   });
@@ -115,7 +115,7 @@ export const welcome = () => {
       window.location.hash = '#feed';
     } catch (error) {
       const errorItem = document.createElement('li');
-      errorItem.textContent = error.message;
+      errorItem.textContent = 'Ocorreu um erro ao realizar o logon Google, tente novamente.';
       errorGoogle.appendChild(errorItem);
     }
   });
