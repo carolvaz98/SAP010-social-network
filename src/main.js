@@ -2,7 +2,6 @@ import { getUsers, db } from './lib/firebase.js';
 import { register } from './components.js/register.js';
 import { feed } from './components.js/feed.js';
 import { welcome } from './components.js/welcome.js';
-// import { sobre } from './components.js/sobre.js';
 
 const root = document.querySelector('#root');
 

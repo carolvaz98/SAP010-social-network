@@ -35,6 +35,7 @@ export async function loginUser(email, password) {
   await signInWithEmailAndPassword(auth, email, password);
 }
 
+// VALIDAÇÃO DE EMAIL DUPLICADO
 export async function emailDuplicate(email) {
   const signInMethods = await fetchSignInMethodsForEmail(auth, email);
   return signInMethods.length > 0;
@@ -53,7 +54,7 @@ export async function userStateLogout() {
   await signOut(authLogOut);
 }
 
-// MANTER USUÁRIO LOGADO (https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br)
+// MANTER USUÁRIO LOGADO
 export async function userAuthChanged(callback) {
   const authLogin = getAuth(app);
   onAuthStateChanged(authLogin, callback);
@@ -65,7 +66,7 @@ export async function addPost(db, comments) {
   await addDoc(commentsColl, comments);
 }
 
-// RECUPERA TODOS OS COMENTÁRIOS DO DB, MAPEIA E TRAZ TODOS EM LISTA PARA O SITE
+// RECUPERA COMENTÁRIOS DO DB
 export async function getPosts(db) {
   const commColl = collection(db, 'comments');
   const postsSnapshot = await getDocs(commColl);
