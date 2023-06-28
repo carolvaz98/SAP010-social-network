@@ -1,4 +1,5 @@
 import { loginCreate, emailDuplicate } from '../lib/index.js';
+import logoPetRegister from '../img/LogoPetChat.png';
 
 export const register = () => {
   const container = document.createElement('div');
@@ -6,7 +7,7 @@ export const register = () => {
     <div class="register-elements">
       <div class="containerRegister">
         <form id="formulario-cadastro">
-          <img src="img/LogoPetChat.png" class="logoPetRegister">
+          <img src="${logoPetRegister}" class="logoPetRegister">
           <h1 class="register-h1"> Cadastro de usuário </h1>
 
           <div class="inputGroup">
