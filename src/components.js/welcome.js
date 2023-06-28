@@ -1,5 +1,5 @@
 import { loginUser, loginGoogle } from '../lib/index.js';
-import animalsBgpImg from '../img/animalsBgp.png';
+import animalsBgpImg from '../img/animalsBgP.png';
 import logoPetWelcomeImg from '../img/LogoPetChat.png';
 import googleLogoImg from '../img/google_logo.png';
 
