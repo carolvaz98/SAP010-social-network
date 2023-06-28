@@ -16,7 +16,7 @@
 
 O PetChat é uma ferramenta de chat desenvolvida para conectar tutores de animais de estimação, permitindo que eles compartilhem dúvidas e experiências relacionadas aos seus pets. A plataforma oferece uma comunidade online onde os usuários podem postar comentários, receber curtidas e respostas de outros membros. O objetivo principal é fornecer um espaço interativo e colaborativo para os amantes de animais, permitindo que eles compartilhem conhecimentos, recebam suporte e se conectem uns com os outros. Os tutores podem utilizar o PetChat para fazer perguntas sobre cuidados específicos para seus animais, como alimentação, exercícios, treinamento, saúde e comportamento. Os outros usuários podem curtir as publicações e responder com conselhos, experiências pessoais ou palavras de encorajamento.
 
-* Link do Projeto: [PetChat](https://social-network-1e938.firebaseapp.com/)
+* Link do Projeto: [PetChat](https://social-network-1e938.web.app/)
 
 ### - <strong>Desenvolvido por</strong>:
 * Carol Protásio
