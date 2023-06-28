@@ -1,4 +1,5 @@
 import { db, auth } from '../lib/firebase.js';
+import logoPetFeed from '../img/LogoPetChat.png';
 import {
   userStateLogout,
   userAuthChanged,
@@ -14,7 +15,7 @@ export const feed = () => {
   const feedHTML = `
     <div class='bg'>  
       <nav class="nav">
-        <img src="../img/logo-petChat-bg.png" alt="LogoPetChat" class="logo">
+        <img src="${logoPetFeed}" alt="LogoPetChat" class="logo">
         <ul>
           <li id="username"></li>
         </ul>

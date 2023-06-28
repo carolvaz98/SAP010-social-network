@@ -1,4 +1,7 @@
 import { loginUser, loginGoogle } from '../lib/index.js';
+import animalsBgpImg from '../img/animalsBgp.png';
+import logoPetWelcomeImg from '../img/LogoPetChat.png';
+import googleLogoImg from '../img/google_logo.png';
 
 export const welcome = () => {
   const container = document.createElement('div');
@@ -6,7 +9,7 @@ export const welcome = () => {
   const signInHTML = `
      <section class="container-parent">
         <div class="container-img-animals">
-            <img src="../img/animalsBgp.png" class="img-animals">
+        <img src="${animalsBgpImg}" class="img-animals">
               <div class="sobre-petChat">
                  Conecte-se no <strong>PetChat</strong>, compartilhe dúvidas e experiências sobre seus pets,
                  faça novas conexões com amantes de animais e receba suporte em cuidados, 
@@ -15,7 +18,7 @@ export const welcome = () => {
                   <div class="containerWelcome">
                     <div class="bgContainer"></div>
                     <div class="divSignIn">
-                      <img src="../img/LogoPetChat.png" class="logoPetWelcome">
+                      <img src="${logoPetWelcomeImg}" class="logoPetWelcome">
                           <label class="label" for="email">E-mail:</label>
                             <div class="inputGroup">
                             <i class="material-icons inputIcon">person_outline</i>
@@ -38,7 +41,7 @@ export const welcome = () => {
             <p class="textOu">----------------------------- ou -----------------------------</p>
 
                 <button class="btnGoogle">
-                  <img class="img-google" src="img/google_logo.png" />
+                  <img class="img-google" src="${googleLogoImg}">
                  Entre com Google
                 </button>
 
