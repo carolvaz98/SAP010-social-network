@@ -12,6 +12,7 @@ import {
   updatePost,
   likePost,
   deletePost,
+  addPost,
 } from '../src/lib/index.js';
 
 jest.mock('firebase/auth', () => {
@@ -154,6 +155,14 @@ describe('getUsers', () => {
     expect(firebaseFirestore.getDocs).toHaveBeenCalledWith(usersCol);
     expect(result).toEqual([user1, user2]);
   });
+});
+
+// TESTE - ADICIONAR POST NO DB
+test('deve adicionar um post ao banco de dados', async () => {
+  const db = {}; // Simulando um objeto de banco de dados vazio
+  const comments = { title: 'Test Post', content: 'test text post.' };
+
+  await expect(addPost(db, comments)).rejects.toThrowError();
 });
 
 // TESTE - DAR LIKE E DESLIKE EM POSTS
