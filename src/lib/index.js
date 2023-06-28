@@ -60,7 +60,7 @@ export async function userAuthChanged(callback) {
   onAuthStateChanged(authLogin, callback);
 }
 
-// FUNÇÃO PARA ADICIONAR COMENTARIO NO DB
+// FUNÇÃO PARA ADICIONAR COMENTARIO NO BANCO DE DADOS
 export async function addPost(db, comments) {
   const commentsColl = collection(db, 'comments');
   await addDoc(commentsColl, comments);
