@@ -15,7 +15,7 @@ export const welcome = () => {
                  faça novas conexões com amantes de animais e receba suporte em cuidados, 
                  alimentação e treinamento.
               </div>
-                  <div class="containerWelcome">
+                  <div class="connpmtainerWelcome">
                     <div class="bgContainer"></div>
                     <div class="divSignIn">
                       <img src="${logoPetWelcomeImg}" class="logoPetWelcome">

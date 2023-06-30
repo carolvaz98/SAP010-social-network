@@ -37,21 +37,14 @@ export const feed = () => {
 
   const commentForm = container.querySelector('#commentForm');
   const commentInput = container.querySelector('#commentInput');
-  const logoutElement = container.querySelector('#logout');
+  const logoutButton = container.querySelector('#logout');
   const usernameElement = container.querySelector('#username');
   const commentSection = container.querySelector('#commentSection');
 
   // BOTÃO DE SAIR
-  logoutElement.addEventListener('click', async () => {
-    try {
-      // eslint-disable-next-line no-console
-      console.log('logged out');
-      userStateLogout(userAuthChanged);
-      window.location.href = '';
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Erro ao deslogar', error);
-    }
+  logoutButton.addEventListener('click', async () => {
+    userStateLogout(userAuthChanged);
+    window.location.href = '';
   });
 
   // ADICIONA O NOME DO USUÁRIO
