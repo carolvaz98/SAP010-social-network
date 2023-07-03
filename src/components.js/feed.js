@@ -43,8 +43,15 @@ export const feed = () => {
 
   // BOTÃO DE SAIR
   logoutButton.addEventListener('click', async () => {
-    userStateLogout(userAuthChanged);
-    window.location.href = '';
+    try {
+      // eslint-disable-next-line no-console
+      console.log('logged out');
+      userStateLogout(userAuthChanged);
+      window.location.href = '';
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Erro ao deslogar', error);
+    }
   });
 
   // ADICIONA O NOME DO USUÁRIO
